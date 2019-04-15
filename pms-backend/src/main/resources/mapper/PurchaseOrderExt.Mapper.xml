@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.xuepeng.dao.impl.PurchaseOrderExtDaoImpl">
+    <!-- 表名 -->
+    <sql id="table_name"> purchase_order </sql>
+    <!-- 列名 -->
+    <sql id="column_list">
+            id, 
+            purchase_date, 
+            supplier_id, 
+            commodity_id, 
+            project_id, 
+            specification, 
+            unit, 
+            quantity, 
+            price, 
+            amount, 
+            remark, 
+            create_user, 
+            modify_user, 
+            create_time, 
+            modify_time
+    </sql>
+
+    <!-- ORM映射关系 -->
+    <resultMap id="resultMap" type="cc.xuepeng.entity.PurchaseOrder">
+        <id column="id" property="id"/>
+        <result column="purchase_date" property="purchaseDate"/>
+        <result column="supplier_id" property="supplierId"/>
+        <result column="commodity_id" property="commodityId"/>
+        <result column="project_id" property="projectId"/>
+        <result column="specification" property="specification"/>
+        <result column="unit" property="unit"/>
+        <result column="quantity" property="quantity"/>
+        <result column="price" property="price"/>
+        <result column="amount" property="amount"/>
+        <result column="remark" property="remark"/>
+        <result column="create_user" property="createUser"/>
+        <result column="modify_user" property="modifyUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+</mapper>
