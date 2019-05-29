@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class UserCondition implements Serializable {
+public class MenuCondition implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
@@ -24,7 +24,7 @@ public class UserCondition implements Serializable {
     /**
      * 构造函数。
      */
-    public UserCondition() {
+    public MenuCondition() {
         criterias = new ArrayList<>();
     }
 
@@ -295,785 +295,476 @@ public class UserCondition implements Serializable {
             addCriterion("`id` not between", value1, value2, ID);
             return (Criteria) this;
         }
-        private static final String LICENSEID = "licenseId";
+        private static final String PID = "pid";
 
-        public Criteria andLicenseIdIsNull() {
-            addCriterion("`license_id` is null");
+        public Criteria andPidIsNull() {
+            addCriterion("`pid` is null");
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdIsNotNull() {
-            addCriterion("`license_id` is not null");
+        public Criteria andPidIsNotNull() {
+            addCriterion("`pid` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdEqualTo(String value) {
-            addCriterion("`license_id` =", value, LICENSEID);
+        public Criteria andPidEqualTo(String value) {
+            addCriterion("`pid` =", value, PID);
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdNotEqualTo(String value) {
-            addCriterion("`license_id` <>", value, LICENSEID);
+        public Criteria andPidNotEqualTo(String value) {
+            addCriterion("`pid` <>", value, PID);
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdGreaterThan(String value) {
-            addCriterion("`license_id` >", value, LICENSEID);
+        public Criteria andPidGreaterThan(String value) {
+            addCriterion("`pid` >", value, PID);
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdGreaterThanOrEqualTo(String value) {
-            addCriterion("`license_id` >=", value, LICENSEID);
+        public Criteria andPidGreaterThanOrEqualTo(String value) {
+            addCriterion("`pid` >=", value, PID);
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdLessThan(String value) {
-            addCriterion("`license_id` <", value, LICENSEID);
+        public Criteria andPidLessThan(String value) {
+            addCriterion("`pid` <", value, PID);
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdLessThanOrEqualTo(String value) {
-            addCriterion("`license_id` <=", value, LICENSEID);
+        public Criteria andPidLessThanOrEqualTo(String value) {
+            addCriterion("`pid` <=", value, PID);
             return (Criteria) this;
         }
 
-        private static final String LICENSEID_LIKE = "`license_id` like";
-        private static final String LICENSEID_NOT_LIKE = "`license_id` not like";
+        private static final String PID_LIKE = "`pid` like";
+        private static final String PID_NOT_LIKE = "`pid` not like";
 
-        public Criteria andLicenseIdLike(String value) {
-            addCriterion(LICENSEID_LIKE, value, LICENSEID);
+        public Criteria andPidLike(String value) {
+            addCriterion(PID_LIKE, value, PID);
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdLikeOnLeft(String value) {
-            addCriterion(LICENSEID_LIKE, "%" + value, LICENSEID);
+        public Criteria andPidLikeOnLeft(String value) {
+            addCriterion(PID_LIKE, "%" + value, PID);
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdLikeOnRight(String value) {
-            addCriterion(LICENSEID_LIKE, value + "%", LICENSEID);
+        public Criteria andPidLikeOnRight(String value) {
+            addCriterion(PID_LIKE, value + "%", PID);
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdLikeOnBoth(String value) {
-            addCriterion(LICENSEID_LIKE, "%" + value + "%", LICENSEID);
+        public Criteria andPidLikeOnBoth(String value) {
+            addCriterion(PID_LIKE, "%" + value + "%", PID);
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdNotLike(String value) {
-            addCriterion(LICENSEID_NOT_LIKE, value, LICENSEID);
+        public Criteria andPidNotLike(String value) {
+            addCriterion(PID_NOT_LIKE, value, PID);
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdNotLikeOnLeft(String value) {
-            addCriterion(LICENSEID_NOT_LIKE, "%" + value, LICENSEID);
+        public Criteria andPidNotLikeOnLeft(String value) {
+            addCriterion(PID_NOT_LIKE, "%" + value, PID);
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdNotLikeOnRight(String value) {
-            addCriterion(LICENSEID_NOT_LIKE, value + "%", LICENSEID);
+        public Criteria andPidNotLikeOnRight(String value) {
+            addCriterion(PID_NOT_LIKE, value + "%", PID);
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdNotLikeOnBoth(String value) {
-            addCriterion(LICENSEID_NOT_LIKE, "%" + value + "%", LICENSEID);
+        public Criteria andPidNotLikeOnBoth(String value) {
+            addCriterion(PID_NOT_LIKE, "%" + value + "%", PID);
             return (Criteria) this;
         }
-        public Criteria andLicenseIdIn(List<String> values) {
-            addCriterion("`license_id` in", values, LICENSEID);
+        public Criteria andPidIn(List<String> values) {
+            addCriterion("`pid` in", values, PID);
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdNotIn(List<String> values) {
-            addCriterion("`license_id` not in", values, LICENSEID);
+        public Criteria andPidNotIn(List<String> values) {
+            addCriterion("`pid` not in", values, PID);
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdBetween(String value1, String value2) {
-            addCriterion("`license_id` between", value1, value2, LICENSEID);
+        public Criteria andPidBetween(String value1, String value2) {
+            addCriterion("`pid` between", value1, value2, PID);
             return (Criteria) this;
         }
 
-        public Criteria andLicenseIdNotBetween(String value1, String value2) {
-            addCriterion("`license_id` not between", value1, value2, LICENSEID);
+        public Criteria andPidNotBetween(String value1, String value2) {
+            addCriterion("`pid` not between", value1, value2, PID);
             return (Criteria) this;
         }
-        private static final String ACCOUNT = "account";
+        private static final String TITLE = "title";
 
-        public Criteria andAccountIsNull() {
-            addCriterion("`account` is null");
+        public Criteria andTitleIsNull() {
+            addCriterion("`title` is null");
             return (Criteria) this;
         }
 
-        public Criteria andAccountIsNotNull() {
-            addCriterion("`account` is not null");
+        public Criteria andTitleIsNotNull() {
+            addCriterion("`title` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andAccountEqualTo(String value) {
-            addCriterion("`account` =", value, ACCOUNT);
+        public Criteria andTitleEqualTo(String value) {
+            addCriterion("`title` =", value, TITLE);
             return (Criteria) this;
         }
 
-        public Criteria andAccountNotEqualTo(String value) {
-            addCriterion("`account` <>", value, ACCOUNT);
+        public Criteria andTitleNotEqualTo(String value) {
+            addCriterion("`title` <>", value, TITLE);
             return (Criteria) this;
         }
 
-        public Criteria andAccountGreaterThan(String value) {
-            addCriterion("`account` >", value, ACCOUNT);
+        public Criteria andTitleGreaterThan(String value) {
+            addCriterion("`title` >", value, TITLE);
             return (Criteria) this;
         }
 
-        public Criteria andAccountGreaterThanOrEqualTo(String value) {
-            addCriterion("`account` >=", value, ACCOUNT);
+        public Criteria andTitleGreaterThanOrEqualTo(String value) {
+            addCriterion("`title` >=", value, TITLE);
             return (Criteria) this;
         }
 
-        public Criteria andAccountLessThan(String value) {
-            addCriterion("`account` <", value, ACCOUNT);
+        public Criteria andTitleLessThan(String value) {
+            addCriterion("`title` <", value, TITLE);
             return (Criteria) this;
         }
 
-        public Criteria andAccountLessThanOrEqualTo(String value) {
-            addCriterion("`account` <=", value, ACCOUNT);
+        public Criteria andTitleLessThanOrEqualTo(String value) {
+            addCriterion("`title` <=", value, TITLE);
             return (Criteria) this;
         }
 
-        private static final String ACCOUNT_LIKE = "`account` like";
-        private static final String ACCOUNT_NOT_LIKE = "`account` not like";
+        private static final String TITLE_LIKE = "`title` like";
+        private static final String TITLE_NOT_LIKE = "`title` not like";
 
-        public Criteria andAccountLike(String value) {
-            addCriterion(ACCOUNT_LIKE, value, ACCOUNT);
+        public Criteria andTitleLike(String value) {
+            addCriterion(TITLE_LIKE, value, TITLE);
             return (Criteria) this;
         }
 
-        public Criteria andAccountLikeOnLeft(String value) {
-            addCriterion(ACCOUNT_LIKE, "%" + value, ACCOUNT);
+        public Criteria andTitleLikeOnLeft(String value) {
+            addCriterion(TITLE_LIKE, "%" + value, TITLE);
             return (Criteria) this;
         }
 
-        public Criteria andAccountLikeOnRight(String value) {
-            addCriterion(ACCOUNT_LIKE, value + "%", ACCOUNT);
+        public Criteria andTitleLikeOnRight(String value) {
+            addCriterion(TITLE_LIKE, value + "%", TITLE);
             return (Criteria) this;
         }
 
-        public Criteria andAccountLikeOnBoth(String value) {
-            addCriterion(ACCOUNT_LIKE, "%" + value + "%", ACCOUNT);
+        public Criteria andTitleLikeOnBoth(String value) {
+            addCriterion(TITLE_LIKE, "%" + value + "%", TITLE);
             return (Criteria) this;
         }
 
-        public Criteria andAccountNotLike(String value) {
-            addCriterion(ACCOUNT_NOT_LIKE, value, ACCOUNT);
+        public Criteria andTitleNotLike(String value) {
+            addCriterion(TITLE_NOT_LIKE, value, TITLE);
             return (Criteria) this;
         }
 
-        public Criteria andAccountNotLikeOnLeft(String value) {
-            addCriterion(ACCOUNT_NOT_LIKE, "%" + value, ACCOUNT);
+        public Criteria andTitleNotLikeOnLeft(String value) {
+            addCriterion(TITLE_NOT_LIKE, "%" + value, TITLE);
             return (Criteria) this;
         }
 
-        public Criteria andAccountNotLikeOnRight(String value) {
-            addCriterion(ACCOUNT_NOT_LIKE, value + "%", ACCOUNT);
+        public Criteria andTitleNotLikeOnRight(String value) {
+            addCriterion(TITLE_NOT_LIKE, value + "%", TITLE);
             return (Criteria) this;
         }
 
-        public Criteria andAccountNotLikeOnBoth(String value) {
-            addCriterion(ACCOUNT_NOT_LIKE, "%" + value + "%", ACCOUNT);
+        public Criteria andTitleNotLikeOnBoth(String value) {
+            addCriterion(TITLE_NOT_LIKE, "%" + value + "%", TITLE);
             return (Criteria) this;
         }
-        public Criteria andAccountIn(List<String> values) {
-            addCriterion("`account` in", values, ACCOUNT);
+        public Criteria andTitleIn(List<String> values) {
+            addCriterion("`title` in", values, TITLE);
             return (Criteria) this;
         }
 
-        public Criteria andAccountNotIn(List<String> values) {
-            addCriterion("`account` not in", values, ACCOUNT);
+        public Criteria andTitleNotIn(List<String> values) {
+            addCriterion("`title` not in", values, TITLE);
             return (Criteria) this;
         }
 
-        public Criteria andAccountBetween(String value1, String value2) {
-            addCriterion("`account` between", value1, value2, ACCOUNT);
+        public Criteria andTitleBetween(String value1, String value2) {
+            addCriterion("`title` between", value1, value2, TITLE);
             return (Criteria) this;
         }
 
-        public Criteria andAccountNotBetween(String value1, String value2) {
-            addCriterion("`account` not between", value1, value2, ACCOUNT);
+        public Criteria andTitleNotBetween(String value1, String value2) {
+            addCriterion("`title` not between", value1, value2, TITLE);
             return (Criteria) this;
         }
-        private static final String SECRET = "secret";
+        private static final String ICON = "icon";
 
-        public Criteria andSecretIsNull() {
-            addCriterion("`secret` is null");
+        public Criteria andIconIsNull() {
+            addCriterion("`icon` is null");
             return (Criteria) this;
         }
 
-        public Criteria andSecretIsNotNull() {
-            addCriterion("`secret` is not null");
+        public Criteria andIconIsNotNull() {
+            addCriterion("`icon` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSecretEqualTo(String value) {
-            addCriterion("`secret` =", value, SECRET);
+        public Criteria andIconEqualTo(String value) {
+            addCriterion("`icon` =", value, ICON);
             return (Criteria) this;
         }
 
-        public Criteria andSecretNotEqualTo(String value) {
-            addCriterion("`secret` <>", value, SECRET);
+        public Criteria andIconNotEqualTo(String value) {
+            addCriterion("`icon` <>", value, ICON);
             return (Criteria) this;
         }
 
-        public Criteria andSecretGreaterThan(String value) {
-            addCriterion("`secret` >", value, SECRET);
+        public Criteria andIconGreaterThan(String value) {
+            addCriterion("`icon` >", value, ICON);
             return (Criteria) this;
         }
 
-        public Criteria andSecretGreaterThanOrEqualTo(String value) {
-            addCriterion("`secret` >=", value, SECRET);
+        public Criteria andIconGreaterThanOrEqualTo(String value) {
+            addCriterion("`icon` >=", value, ICON);
             return (Criteria) this;
         }
 
-        public Criteria andSecretLessThan(String value) {
-            addCriterion("`secret` <", value, SECRET);
+        public Criteria andIconLessThan(String value) {
+            addCriterion("`icon` <", value, ICON);
             return (Criteria) this;
         }
 
-        public Criteria andSecretLessThanOrEqualTo(String value) {
-            addCriterion("`secret` <=", value, SECRET);
+        public Criteria andIconLessThanOrEqualTo(String value) {
+            addCriterion("`icon` <=", value, ICON);
             return (Criteria) this;
         }
 
-        private static final String SECRET_LIKE = "`secret` like";
-        private static final String SECRET_NOT_LIKE = "`secret` not like";
+        private static final String ICON_LIKE = "`icon` like";
+        private static final String ICON_NOT_LIKE = "`icon` not like";
 
-        public Criteria andSecretLike(String value) {
-            addCriterion(SECRET_LIKE, value, SECRET);
+        public Criteria andIconLike(String value) {
+            addCriterion(ICON_LIKE, value, ICON);
             return (Criteria) this;
         }
 
-        public Criteria andSecretLikeOnLeft(String value) {
-            addCriterion(SECRET_LIKE, "%" + value, SECRET);
+        public Criteria andIconLikeOnLeft(String value) {
+            addCriterion(ICON_LIKE, "%" + value, ICON);
             return (Criteria) this;
         }
 
-        public Criteria andSecretLikeOnRight(String value) {
-            addCriterion(SECRET_LIKE, value + "%", SECRET);
+        public Criteria andIconLikeOnRight(String value) {
+            addCriterion(ICON_LIKE, value + "%", ICON);
             return (Criteria) this;
         }
 
-        public Criteria andSecretLikeOnBoth(String value) {
-            addCriterion(SECRET_LIKE, "%" + value + "%", SECRET);
+        public Criteria andIconLikeOnBoth(String value) {
+            addCriterion(ICON_LIKE, "%" + value + "%", ICON);
             return (Criteria) this;
         }
 
-        public Criteria andSecretNotLike(String value) {
-            addCriterion(SECRET_NOT_LIKE, value, SECRET);
+        public Criteria andIconNotLike(String value) {
+            addCriterion(ICON_NOT_LIKE, value, ICON);
             return (Criteria) this;
         }
 
-        public Criteria andSecretNotLikeOnLeft(String value) {
-            addCriterion(SECRET_NOT_LIKE, "%" + value, SECRET);
+        public Criteria andIconNotLikeOnLeft(String value) {
+            addCriterion(ICON_NOT_LIKE, "%" + value, ICON);
             return (Criteria) this;
         }
 
-        public Criteria andSecretNotLikeOnRight(String value) {
-            addCriterion(SECRET_NOT_LIKE, value + "%", SECRET);
+        public Criteria andIconNotLikeOnRight(String value) {
+            addCriterion(ICON_NOT_LIKE, value + "%", ICON);
             return (Criteria) this;
         }
 
-        public Criteria andSecretNotLikeOnBoth(String value) {
-            addCriterion(SECRET_NOT_LIKE, "%" + value + "%", SECRET);
+        public Criteria andIconNotLikeOnBoth(String value) {
+            addCriterion(ICON_NOT_LIKE, "%" + value + "%", ICON);
             return (Criteria) this;
         }
-        public Criteria andSecretIn(List<String> values) {
-            addCriterion("`secret` in", values, SECRET);
+        public Criteria andIconIn(List<String> values) {
+            addCriterion("`icon` in", values, ICON);
             return (Criteria) this;
         }
 
-        public Criteria andSecretNotIn(List<String> values) {
-            addCriterion("`secret` not in", values, SECRET);
+        public Criteria andIconNotIn(List<String> values) {
+            addCriterion("`icon` not in", values, ICON);
             return (Criteria) this;
         }
 
-        public Criteria andSecretBetween(String value1, String value2) {
-            addCriterion("`secret` between", value1, value2, SECRET);
+        public Criteria andIconBetween(String value1, String value2) {
+            addCriterion("`icon` between", value1, value2, ICON);
             return (Criteria) this;
         }
 
-        public Criteria andSecretNotBetween(String value1, String value2) {
-            addCriterion("`secret` not between", value1, value2, SECRET);
+        public Criteria andIconNotBetween(String value1, String value2) {
+            addCriterion("`icon` not between", value1, value2, ICON);
             return (Criteria) this;
         }
-        private static final String NAME = "name";
+        private static final String PATH = "path";
 
-        public Criteria andNameIsNull() {
-            addCriterion("`name` is null");
+        public Criteria andPathIsNull() {
+            addCriterion("`path` is null");
             return (Criteria) this;
         }
 
-        public Criteria andNameIsNotNull() {
-            addCriterion("`name` is not null");
+        public Criteria andPathIsNotNull() {
+            addCriterion("`path` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNameEqualTo(String value) {
-            addCriterion("`name` =", value, NAME);
+        public Criteria andPathEqualTo(String value) {
+            addCriterion("`path` =", value, PATH);
             return (Criteria) this;
         }
 
-        public Criteria andNameNotEqualTo(String value) {
-            addCriterion("`name` <>", value, NAME);
+        public Criteria andPathNotEqualTo(String value) {
+            addCriterion("`path` <>", value, PATH);
             return (Criteria) this;
         }
 
-        public Criteria andNameGreaterThan(String value) {
-            addCriterion("`name` >", value, NAME);
+        public Criteria andPathGreaterThan(String value) {
+            addCriterion("`path` >", value, PATH);
             return (Criteria) this;
         }
 
-        public Criteria andNameGreaterThanOrEqualTo(String value) {
-            addCriterion("`name` >=", value, NAME);
+        public Criteria andPathGreaterThanOrEqualTo(String value) {
+            addCriterion("`path` >=", value, PATH);
             return (Criteria) this;
         }
 
-        public Criteria andNameLessThan(String value) {
-            addCriterion("`name` <", value, NAME);
+        public Criteria andPathLessThan(String value) {
+            addCriterion("`path` <", value, PATH);
             return (Criteria) this;
         }
 
-        public Criteria andNameLessThanOrEqualTo(String value) {
-            addCriterion("`name` <=", value, NAME);
+        public Criteria andPathLessThanOrEqualTo(String value) {
+            addCriterion("`path` <=", value, PATH);
             return (Criteria) this;
         }
 
-        private static final String NAME_LIKE = "`name` like";
-        private static final String NAME_NOT_LIKE = "`name` not like";
+        private static final String PATH_LIKE = "`path` like";
+        private static final String PATH_NOT_LIKE = "`path` not like";
 
-        public Criteria andNameLike(String value) {
-            addCriterion(NAME_LIKE, value, NAME);
+        public Criteria andPathLike(String value) {
+            addCriterion(PATH_LIKE, value, PATH);
             return (Criteria) this;
         }
 
-        public Criteria andNameLikeOnLeft(String value) {
-            addCriterion(NAME_LIKE, "%" + value, NAME);
+        public Criteria andPathLikeOnLeft(String value) {
+            addCriterion(PATH_LIKE, "%" + value, PATH);
             return (Criteria) this;
         }
 
-        public Criteria andNameLikeOnRight(String value) {
-            addCriterion(NAME_LIKE, value + "%", NAME);
+        public Criteria andPathLikeOnRight(String value) {
+            addCriterion(PATH_LIKE, value + "%", PATH);
             return (Criteria) this;
         }
 
-        public Criteria andNameLikeOnBoth(String value) {
-            addCriterion(NAME_LIKE, "%" + value + "%", NAME);
+        public Criteria andPathLikeOnBoth(String value) {
+            addCriterion(PATH_LIKE, "%" + value + "%", PATH);
             return (Criteria) this;
         }
 
-        public Criteria andNameNotLike(String value) {
-            addCriterion(NAME_NOT_LIKE, value, NAME);
+        public Criteria andPathNotLike(String value) {
+            addCriterion(PATH_NOT_LIKE, value, PATH);
             return (Criteria) this;
         }
 
-        public Criteria andNameNotLikeOnLeft(String value) {
-            addCriterion(NAME_NOT_LIKE, "%" + value, NAME);
+        public Criteria andPathNotLikeOnLeft(String value) {
+            addCriterion(PATH_NOT_LIKE, "%" + value, PATH);
             return (Criteria) this;
         }
 
-        public Criteria andNameNotLikeOnRight(String value) {
-            addCriterion(NAME_NOT_LIKE, value + "%", NAME);
+        public Criteria andPathNotLikeOnRight(String value) {
+            addCriterion(PATH_NOT_LIKE, value + "%", PATH);
             return (Criteria) this;
         }
 
-        public Criteria andNameNotLikeOnBoth(String value) {
-            addCriterion(NAME_NOT_LIKE, "%" + value + "%", NAME);
+        public Criteria andPathNotLikeOnBoth(String value) {
+            addCriterion(PATH_NOT_LIKE, "%" + value + "%", PATH);
             return (Criteria) this;
         }
-        public Criteria andNameIn(List<String> values) {
-            addCriterion("`name` in", values, NAME);
+        public Criteria andPathIn(List<String> values) {
+            addCriterion("`path` in", values, PATH);
             return (Criteria) this;
         }
 
-        public Criteria andNameNotIn(List<String> values) {
-            addCriterion("`name` not in", values, NAME);
+        public Criteria andPathNotIn(List<String> values) {
+            addCriterion("`path` not in", values, PATH);
             return (Criteria) this;
         }
 
-        public Criteria andNameBetween(String value1, String value2) {
-            addCriterion("`name` between", value1, value2, NAME);
+        public Criteria andPathBetween(String value1, String value2) {
+            addCriterion("`path` between", value1, value2, PATH);
             return (Criteria) this;
         }
 
-        public Criteria andNameNotBetween(String value1, String value2) {
-            addCriterion("`name` not between", value1, value2, NAME);
+        public Criteria andPathNotBetween(String value1, String value2) {
+            addCriterion("`path` not between", value1, value2, PATH);
             return (Criteria) this;
         }
-        private static final String PHONE = "phone";
+        private static final String SORT = "sort";
 
-        public Criteria andPhoneIsNull() {
-            addCriterion("`phone` is null");
+        public Criteria andSortIsNull() {
+            addCriterion("`sort` is null");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneIsNotNull() {
-            addCriterion("`phone` is not null");
+        public Criteria andSortIsNotNull() {
+            addCriterion("`sort` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneEqualTo(String value) {
-            addCriterion("`phone` =", value, PHONE);
+        public Criteria andSortEqualTo(Short value) {
+            addCriterion("`sort` =", value, SORT);
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNotEqualTo(String value) {
-            addCriterion("`phone` <>", value, PHONE);
+        public Criteria andSortNotEqualTo(Short value) {
+            addCriterion("`sort` <>", value, SORT);
             return (Criteria) this;
         }
 
-        public Criteria andPhoneGreaterThan(String value) {
-            addCriterion("`phone` >", value, PHONE);
+        public Criteria andSortGreaterThan(Short value) {
+            addCriterion("`sort` >", value, SORT);
             return (Criteria) this;
         }
 
-        public Criteria andPhoneGreaterThanOrEqualTo(String value) {
-            addCriterion("`phone` >=", value, PHONE);
+        public Criteria andSortGreaterThanOrEqualTo(Short value) {
+            addCriterion("`sort` >=", value, SORT);
             return (Criteria) this;
         }
 
-        public Criteria andPhoneLessThan(String value) {
-            addCriterion("`phone` <", value, PHONE);
+        public Criteria andSortLessThan(Short value) {
+            addCriterion("`sort` <", value, SORT);
             return (Criteria) this;
         }
 
-        public Criteria andPhoneLessThanOrEqualTo(String value) {
-            addCriterion("`phone` <=", value, PHONE);
+        public Criteria andSortLessThanOrEqualTo(Short value) {
+            addCriterion("`sort` <=", value, SORT);
             return (Criteria) this;
         }
-
-        private static final String PHONE_LIKE = "`phone` like";
-        private static final String PHONE_NOT_LIKE = "`phone` not like";
-
-        public Criteria andPhoneLike(String value) {
-            addCriterion(PHONE_LIKE, value, PHONE);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhoneLikeOnLeft(String value) {
-            addCriterion(PHONE_LIKE, "%" + value, PHONE);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhoneLikeOnRight(String value) {
-            addCriterion(PHONE_LIKE, value + "%", PHONE);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhoneLikeOnBoth(String value) {
-            addCriterion(PHONE_LIKE, "%" + value + "%", PHONE);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhoneNotLike(String value) {
-            addCriterion(PHONE_NOT_LIKE, value, PHONE);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhoneNotLikeOnLeft(String value) {
-            addCriterion(PHONE_NOT_LIKE, "%" + value, PHONE);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhoneNotLikeOnRight(String value) {
-            addCriterion(PHONE_NOT_LIKE, value + "%", PHONE);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhoneNotLikeOnBoth(String value) {
-            addCriterion(PHONE_NOT_LIKE, "%" + value + "%", PHONE);
-            return (Criteria) this;
-        }
-        public Criteria andPhoneIn(List<String> values) {
-            addCriterion("`phone` in", values, PHONE);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhoneNotIn(List<String> values) {
-            addCriterion("`phone` not in", values, PHONE);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhoneBetween(String value1, String value2) {
-            addCriterion("`phone` between", value1, value2, PHONE);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhoneNotBetween(String value1, String value2) {
-            addCriterion("`phone` not between", value1, value2, PHONE);
-            return (Criteria) this;
-        }
-        private static final String EMAIL = "email";
-
-        public Criteria andEmailIsNull() {
-            addCriterion("`email` is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailIsNotNull() {
-            addCriterion("`email` is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailEqualTo(String value) {
-            addCriterion("`email` =", value, EMAIL);
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailNotEqualTo(String value) {
-            addCriterion("`email` <>", value, EMAIL);
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailGreaterThan(String value) {
-            addCriterion("`email` >", value, EMAIL);
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailGreaterThanOrEqualTo(String value) {
-            addCriterion("`email` >=", value, EMAIL);
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailLessThan(String value) {
-            addCriterion("`email` <", value, EMAIL);
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailLessThanOrEqualTo(String value) {
-            addCriterion("`email` <=", value, EMAIL);
-            return (Criteria) this;
-        }
-
-        private static final String EMAIL_LIKE = "`email` like";
-        private static final String EMAIL_NOT_LIKE = "`email` not like";
-
-        public Criteria andEmailLike(String value) {
-            addCriterion(EMAIL_LIKE, value, EMAIL);
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailLikeOnLeft(String value) {
-            addCriterion(EMAIL_LIKE, "%" + value, EMAIL);
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailLikeOnRight(String value) {
-            addCriterion(EMAIL_LIKE, value + "%", EMAIL);
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailLikeOnBoth(String value) {
-            addCriterion(EMAIL_LIKE, "%" + value + "%", EMAIL);
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailNotLike(String value) {
-            addCriterion(EMAIL_NOT_LIKE, value, EMAIL);
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailNotLikeOnLeft(String value) {
-            addCriterion(EMAIL_NOT_LIKE, "%" + value, EMAIL);
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailNotLikeOnRight(String value) {
-            addCriterion(EMAIL_NOT_LIKE, value + "%", EMAIL);
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailNotLikeOnBoth(String value) {
-            addCriterion(EMAIL_NOT_LIKE, "%" + value + "%", EMAIL);
-            return (Criteria) this;
-        }
-        public Criteria andEmailIn(List<String> values) {
-            addCriterion("`email` in", values, EMAIL);
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailNotIn(List<String> values) {
-            addCriterion("`email` not in", values, EMAIL);
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailBetween(String value1, String value2) {
-            addCriterion("`email` between", value1, value2, EMAIL);
-            return (Criteria) this;
-        }
-
-        public Criteria andEmailNotBetween(String value1, String value2) {
-            addCriterion("`email` not between", value1, value2, EMAIL);
-            return (Criteria) this;
-        }
-        private static final String PHOTO = "photo";
-
-        public Criteria andPhotoIsNull() {
-            addCriterion("`photo` is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoIsNotNull() {
-            addCriterion("`photo` is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoEqualTo(String value) {
-            addCriterion("`photo` =", value, PHOTO);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoNotEqualTo(String value) {
-            addCriterion("`photo` <>", value, PHOTO);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoGreaterThan(String value) {
-            addCriterion("`photo` >", value, PHOTO);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoGreaterThanOrEqualTo(String value) {
-            addCriterion("`photo` >=", value, PHOTO);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoLessThan(String value) {
-            addCriterion("`photo` <", value, PHOTO);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoLessThanOrEqualTo(String value) {
-            addCriterion("`photo` <=", value, PHOTO);
-            return (Criteria) this;
-        }
-
-        private static final String PHOTO_LIKE = "`photo` like";
-        private static final String PHOTO_NOT_LIKE = "`photo` not like";
-
-        public Criteria andPhotoLike(String value) {
-            addCriterion(PHOTO_LIKE, value, PHOTO);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoLikeOnLeft(String value) {
-            addCriterion(PHOTO_LIKE, "%" + value, PHOTO);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoLikeOnRight(String value) {
-            addCriterion(PHOTO_LIKE, value + "%", PHOTO);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoLikeOnBoth(String value) {
-            addCriterion(PHOTO_LIKE, "%" + value + "%", PHOTO);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoNotLike(String value) {
-            addCriterion(PHOTO_NOT_LIKE, value, PHOTO);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoNotLikeOnLeft(String value) {
-            addCriterion(PHOTO_NOT_LIKE, "%" + value, PHOTO);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoNotLikeOnRight(String value) {
-            addCriterion(PHOTO_NOT_LIKE, value + "%", PHOTO);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoNotLikeOnBoth(String value) {
-            addCriterion(PHOTO_NOT_LIKE, "%" + value + "%", PHOTO);
-            return (Criteria) this;
-        }
-        public Criteria andPhotoIn(List<String> values) {
-            addCriterion("`photo` in", values, PHOTO);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoNotIn(List<String> values) {
-            addCriterion("`photo` not in", values, PHOTO);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoBetween(String value1, String value2) {
-            addCriterion("`photo` between", value1, value2, PHOTO);
-            return (Criteria) this;
-        }
-
-        public Criteria andPhotoNotBetween(String value1, String value2) {
-            addCriterion("`photo` not between", value1, value2, PHOTO);
-            return (Criteria) this;
-        }
-        private static final String STATUS = "status";
-
-        public Criteria andStatusIsNull() {
-            addCriterion("`status` is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusIsNotNull() {
-            addCriterion("`status` is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusEqualTo(Byte value) {
-            addCriterion("`status` =", value, STATUS);
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusNotEqualTo(Byte value) {
-            addCriterion("`status` <>", value, STATUS);
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusGreaterThan(Byte value) {
-            addCriterion("`status` >", value, STATUS);
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusGreaterThanOrEqualTo(Byte value) {
-            addCriterion("`status` >=", value, STATUS);
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusLessThan(Byte value) {
-            addCriterion("`status` <", value, STATUS);
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusLessThanOrEqualTo(Byte value) {
-            addCriterion("`status` <=", value, STATUS);
-            return (Criteria) this;
-        }
-        public Criteria andStatusIn(List<Byte> values) {
-            addCriterion("`status` in", values, STATUS);
+        public Criteria andSortIn(List<Short> values) {
+            addCriterion("`sort` in", values, SORT);
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Byte> values) {
-            addCriterion("`status` not in", values, STATUS);
+        public Criteria andSortNotIn(List<Short> values) {
+            addCriterion("`sort` not in", values, SORT);
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Byte value1, Byte value2) {
-            addCriterion("`status` between", value1, value2, STATUS);
+        public Criteria andSortBetween(Short value1, Short value2) {
+            addCriterion("`sort` between", value1, value2, SORT);
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Byte value1, Byte value2) {
-            addCriterion("`status` not between", value1, value2, STATUS);
+        public Criteria andSortNotBetween(Short value1, Short value2) {
+            addCriterion("`sort` not between", value1, value2, SORT);
             return (Criteria) this;
         }
         private static final String DELETED = "deleted";
@@ -1148,94 +839,51 @@ public class UserCondition implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andRemarkEqualTo(String value) {
+        public Criteria andRemarkEqualTo(Integer value) {
             addCriterion("`remark` =", value, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkNotEqualTo(String value) {
+        public Criteria andRemarkNotEqualTo(Integer value) {
             addCriterion("`remark` <>", value, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkGreaterThan(String value) {
+        public Criteria andRemarkGreaterThan(Integer value) {
             addCriterion("`remark` >", value, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkGreaterThanOrEqualTo(String value) {
+        public Criteria andRemarkGreaterThanOrEqualTo(Integer value) {
             addCriterion("`remark` >=", value, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkLessThan(String value) {
+        public Criteria andRemarkLessThan(Integer value) {
             addCriterion("`remark` <", value, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkLessThanOrEqualTo(String value) {
+        public Criteria andRemarkLessThanOrEqualTo(Integer value) {
             addCriterion("`remark` <=", value, REMARK);
             return (Criteria) this;
         }
-
-        private static final String REMARK_LIKE = "`remark` like";
-        private static final String REMARK_NOT_LIKE = "`remark` not like";
-
-        public Criteria andRemarkLike(String value) {
-            addCriterion(REMARK_LIKE, value, REMARK);
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarkLikeOnLeft(String value) {
-            addCriterion(REMARK_LIKE, "%" + value, REMARK);
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarkLikeOnRight(String value) {
-            addCriterion(REMARK_LIKE, value + "%", REMARK);
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarkLikeOnBoth(String value) {
-            addCriterion(REMARK_LIKE, "%" + value + "%", REMARK);
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarkNotLike(String value) {
-            addCriterion(REMARK_NOT_LIKE, value, REMARK);
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarkNotLikeOnLeft(String value) {
-            addCriterion(REMARK_NOT_LIKE, "%" + value, REMARK);
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarkNotLikeOnRight(String value) {
-            addCriterion(REMARK_NOT_LIKE, value + "%", REMARK);
-            return (Criteria) this;
-        }
-
-        public Criteria andRemarkNotLikeOnBoth(String value) {
-            addCriterion(REMARK_NOT_LIKE, "%" + value + "%", REMARK);
-            return (Criteria) this;
-        }
-        public Criteria andRemarkIn(List<String> values) {
+        public Criteria andRemarkIn(List<Integer> values) {
             addCriterion("`remark` in", values, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkNotIn(List<String> values) {
+        public Criteria andRemarkNotIn(List<Integer> values) {
             addCriterion("`remark` not in", values, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkBetween(String value1, String value2) {
+        public Criteria andRemarkBetween(Integer value1, Integer value2) {
             addCriterion("`remark` between", value1, value2, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkNotBetween(String value1, String value2) {
+        public Criteria andRemarkNotBetween(Integer value1, Integer value2) {
             addCriterion("`remark` not between", value1, value2, REMARK);
             return (Criteria) this;
         }

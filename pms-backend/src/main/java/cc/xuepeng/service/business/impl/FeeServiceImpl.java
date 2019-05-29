@@ -1,9 +1,9 @@
-package cc.xuepeng.service.impl;
+package cc.xuepeng.service.business.impl;
 
 import cc.xuepeng.dao.FeeDao;
 import cc.xuepeng.entity.Fee;
 import cc.xuepeng.entity.FeeCondition;
-import cc.xuepeng.service.FeeService;
+import cc.xuepeng.service.business.FeeService;
 import cn.yesway.framework.common.entity.page.PageParam;
 import cn.yesway.framework.common.entity.page.PageResult;
 import cn.yesway.framework.common.util.PKUtil;
@@ -19,6 +19,11 @@ import java.util.List;
  */
 @Service("feeService")
 public class FeeServiceImpl implements FeeService {
+
+    /**
+     * 父级主键默认值。
+     */
+    private static final String PARENT_ID = "0";
 
     /**
      * 构造函数。
@@ -90,7 +95,7 @@ public class FeeServiceImpl implements FeeService {
     @Override
     public List<Fee> findAll() {
         FeeCondition condition = new FeeCondition();
-        condition.createCriteria().andIsDeleteEqualTo(false);
+        condition.createCriteria().andIsDeleteEqualTo(Boolean.FALSE);
         return feeDao.selectByCondition(condition);
     }
 
@@ -103,7 +108,7 @@ public class FeeServiceImpl implements FeeService {
     @Override
     public PageResult<Fee> findByPage(final PageParam pageParam) {
         FeeCondition condition = new FeeCondition();
-        condition.createCriteria().andIsDeleteEqualTo(false);
+        condition.createCriteria().andIsDeleteEqualTo(Boolean.FALSE);
         return feeDao.selectByConditionAndPage(condition, pageParam);
     }
 
@@ -118,9 +123,38 @@ public class FeeServiceImpl implements FeeService {
     public boolean isExistsByName(final String name) {
         FeeCondition condition = new FeeCondition();
         condition.createCriteria()
-                .andIsDeleteEqualTo(false)
+                .andIsDeleteEqualTo(Boolean.FALSE)
                 .andNameEqualTo(name);
         return feeDao.countByCondition(condition) > 0;
+    }
+
+    /**
+     * 查询父级费用类型。
+     *
+     * @return 费用类型集合。
+     */
+    @Override
+    public List<Fee> findParent() {
+        FeeCondition condition = new FeeCondition();
+        condition.createCriteria()
+                .andPidEqualTo(PARENT_ID)
+                .andIsDeleteEqualTo(Boolean.FALSE);
+        return feeDao.selectByCondition(condition);
+    }
+
+    /**
+     * 查询子级费用类型。
+     *
+     * @param id 主键。
+     * @return 费用类型集合。
+     */
+    @Override
+    public List<Fee> findChildren(final String id) {
+        FeeCondition condition = new FeeCondition();
+        condition.createCriteria()
+                .andPidEqualTo(id)
+                .andIsDeleteEqualTo(Boolean.FALSE);
+        return feeDao.selectByCondition(condition);
     }
 
     /**

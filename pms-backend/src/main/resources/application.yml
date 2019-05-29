@@ -1,12 +1,12 @@
 server:
-  port: 8081
+  port: 9080
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/pms?useUnicode=true&characterEncoding=UTF-8&relaxAutoCommit=true&serverTimezone=UTC&useSSL=false
     username: root
-    password: Snow103082..
+    password: root
     hikari:
       auto-commit: true #此属性控制从池返回的连接的默认自动提交行为，默认值：true
       pool-name: HikariConnectionPool

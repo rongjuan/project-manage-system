@@ -1,7 +1,7 @@
 package cc.xuepeng.controller;
 
 import cc.xuepeng.entity.Project;
-import cc.xuepeng.service.ProjectService;
+import cc.xuepeng.service.business.ProjectService;
 import cn.yesway.framework.common.entity.http.DefaultHttpResultFactory;
 import cn.yesway.framework.common.entity.http.HttpResult;
 import cn.yesway.framework.common.entity.page.PageParam;

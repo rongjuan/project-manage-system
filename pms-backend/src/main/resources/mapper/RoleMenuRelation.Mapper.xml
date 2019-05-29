@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.xuepeng.dao.impl.RoleMenuRelationDaoImpl">
+    <!-- 表名 -->
+    <sql id="table_name"> `role_menu_relation` </sql>
+    <!-- 列名 -->
+    <sql id="column_list">
+            `id`, 
+            `role_id`, 
+            `menu_id`
+    </sql>
+    <!-- 查询语句 -->
+    <sql id="condition_sql">
+        <if test="id != null and id != ''">
+            and `id` = #{id}
+        </if>
+        <if test="roleId != null and roleId != ''">
+            and `role_id` = #{roleId}
+        </if>
+        <if test="menuId != null and menuId != ''">
+            and `menu_id` = #{menuId}
+        </if>
+    </sql>
+    <!-- EntityCondition查询语句 -->
+    <sql id="select_condition_sql">
+        <foreach collection="criterias" item="criteria" separator="or">
+            <trim prefix="(" suffix=")" prefixOverrides="and">
+                <foreach collection="criteria.criteria" item="criterion">
+                    <choose>
+                        <when test="criterion.noValue">
+                            and ${criterion.condition}
+                        </when>
+                        <when test="criterion.singleValue">
+                            and ${criterion.condition} #{criterion.value}
+                        </when>
+                        <when test="criterion.betweenValue">
+                            and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                        </when>
+                        <when test="criterion.listValue">
+                            and ${criterion.condition}
+                            <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                     separator=",">
+                            #{listItem}
+                            </foreach>
+                        </when>
+                    </choose>
+                </foreach>
+            </trim>
+        </foreach>
+    </sql>
+    <!-- UpdateCondition查询语句 -->
+    <sql id="update_condition_sql">
+        <foreach collection="condition.criterias" item="criteria" separator="or">
+            <trim prefix="(" suffix=")" prefixOverrides="and">
+                <foreach collection="criteria.criteria" item="criterion">
+                    <choose>
+                        <when test="criterion.noValue">
+                            and ${criterion.condition}
+                        </when>
+                        <when test="criterion.singleValue">
+                            and ${criterion.condition} #{criterion.value}
+                        </when>
+                        <when test="criterion.betweenValue">
+                            and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                        </when>
+                        <when test="criterion.listValue">
+                            and ${criterion.condition}
+                            <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                     separator=",">
+                            #{listItem}
+                            </foreach>
+                        </when>
+                    </choose>
+                </foreach>
+            </trim>
+        </foreach>
+    </sql>
+
+    <!-- ORM映射关系 -->
+    <resultMap id="resultMap" type="cc.xuepeng.entity.RoleMenuRelation">
+        <id column="id" property="id"/>
+        <result column="role_id" property="roleId"/>
+        <result column="menu_id" property="menuId"/>
+    </resultMap>
+
+    <!-- 全字段新增 -->
+    <insert id="insert" parameterType="cc.xuepeng.entity.RoleMenuRelation">
+        insert into
+        <include refid="table_name"/>
+        (
+        <include refid="column_list"/>
+        )
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id},
+            #{roleId},
+            #{menuId},
+        </trim>
+    </insert>
+
+    <!-- 非空字段新增 -->
+    <insert id="insertSelective" parameterType="cc.xuepeng.entity.RoleMenuRelation">
+        insert into
+        <include refid="table_name"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                `id`,
+            </if>
+            <if test="roleId != null and roleId != ''">
+                `role_id`,
+            </if>
+            <if test="menuId != null and menuId != ''">
+                `menu_id`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id},
+            </if>
+            <if test="roleId != null and roleId != ''">
+                #{roleId},
+            </if>
+            <if test="menuId != null and menuId != ''">
+                #{menuId},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 全字段批量新增 -->
+    <insert id="insertBatch" parameterType="cc.xuepeng.entity.RoleMenuRelation">
+        insert into
+        <include refid="table_name"/>
+        (
+        <include refid="column_list"/>
+        )
+        values
+        <foreach collection="list" item="item" open=" " close=""
+                 separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.id},
+                #{item.roleId},
+                #{item.menuId},
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 非空字段批量新增 -->
+    <insert id="insertBatchSelective" parameterType="cc.xuepeng.entity.RoleMenuRelation">
+        insert into
+        <include refid="table_name"/>
+        <foreach collection="list" item="item" open=" " close="" separator="," index="index">
+            <if test="index == 0">
+                <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="item.id != null and item.id != ''">
+                        `id`,
+                    </if>
+                    <if test="item.roleId != null and item.roleId != ''">
+                        `role_id`,
+                    </if>
+                    <if test="item.menuId != null and item.menuId != ''">
+                        `menu_id`,
+                    </if>
+                </trim>
+            </if>
+        </foreach>
+        values
+        <foreach collection="list" item="item" open=" " close=""
+                 separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="item.id != null and item.id != ''">
+                #{item.id},
+            </if>
+            <if test="item.roleId != null and item.roleId != ''">
+                #{item.roleId},
+            </if>
+            <if test="item.menuId != null and item.menuId != ''">
+                #{item.menuId},
+            </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 根据Id修改 -->
+    <update id="update" parameterType="cc.xuepeng.entity.RoleMenuRelation">
+        update
+        <include refid="table_name"/>
+        <set>
+            <if test="roleId != null and roleId != ''">
+                `role_id` = #{roleId},
+            </if>
+            <if test="menuId != null and menuId != ''">
+                `menu_id` = #{menuId}
+            </if>
+        </set>
+        <where>id = #{id}</where>
+    </update>
+
+    <!-- 根据Id全字段修改 -->
+    <update id="updateByPrimaryKey" parameterType="cc.xuepeng.entity.RoleMenuRelation">
+        update
+        <include refid="table_name"/>
+        <set>
+                `role_id` = #{roleId},
+                `menu_id` = #{menuId}
+        </set>
+        <where>id = #{id}</where>
+    </update>
+
+    <!-- 根据Id非空字段修改 -->
+    <update id="updateByPrimaryKeySelective" parameterType="cc.xuepeng.entity.RoleMenuRelation">
+        update
+        <include refid="table_name"/>
+        <set>
+            <if test="roleId != null and roleId != ''">
+                `role_id` = #{roleId},
+            </if>
+            <if test="menuId != null and menuId != ''">
+                `menu_id` = #{menuId}
+            </if>
+        </set>
+        <where>id = #{id}</where>
+    </update>
+
+    <!-- 根据条件全字段修改 -->
+    <update id="updateByCondition" parameterType="map">
+        update
+        <include refid="table_name"/>
+        <set>
+                `role_id` = #{entity.roleId},
+                `menu_id` = #{entity.menuId}
+        </set>
+        <where>
+            <if test="condition != null">
+                <include refid="update_condition_sql"/>
+            </if>
+        </where>
+    </update>
+
+    <!-- 根据条件非空字段修改 -->
+    <update id="updateByConditionSelective" parameterType="map">
+        update
+        <include refid="table_name"/>
+        <set>
+            <if test="entity.roleId != null and entity.roleId != ''">
+                `role_id` = #{entity.roleId},
+            </if>
+            <if test="entity.menuId != null and entity.menuId != ''">
+                `menu_id` = #{entity.menuId}
+            </if>
+        </set>
+        <where>
+            <if test="condition != null">
+                <include refid="update_condition_sql"/>
+            </if>
+        </where>
+    </update>
+
+    <!-- 根据主键删除:过期 -->
+    <delete id="deleteById" parameterType="java.lang.String">
+        delete from
+        <include refid="table_name"/>
+        <where>`id` = #{id}</where>
+    </delete>
+
+    <!-- 根据主键批量删除:过期 -->
+    <delete id="deleteByIds" parameterType="java.lang.String">
+        delete from
+        <include refid="table_name"/>
+        <where>
+            `id`
+            <foreach collection="array" item="id" open="in (" close=")"
+                     separator=",">
+            #{id}
+            </foreach>
+        </where>
+    </delete>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from
+        <include refid="table_name"/>
+        <where>`id` = #{id}</where>
+    </delete>
+
+    <!-- 根据主键批量删除 -->
+    <delete id="deleteByPrimaryKeys" parameterType="java.lang.String">
+        delete from
+        <include refid="table_name"/>
+        <where>
+            `id`
+            <foreach collection="array" item="id" open="in (" close=")"
+                     separator=",">
+            #{id}
+            </foreach>
+        </where>
+    </delete>
+
+    <!-- 根据条件删除 -->
+    <delete id="deleteByCondition" parameterType="cc.xuepeng.entity.RoleMenuRelationCondition">
+        delete from
+        <include refid="table_name"/>
+        <where>
+            <include refid="select_condition_sql"/>
+        </where>
+    </delete>
+
+    <!-- 根据主键查找:过期 -->
+    <select id="findById" resultMap="resultMap" parameterType="java.lang.String">
+        select
+        <include refid="column_list"/>
+        from
+        <include refid="table_name"/>
+        <where>`id` = #{id}</where>
+    </select>
+
+    <!-- 根据多个主键查找:过期 -->
+    <select id="findByIds" resultMap="resultMap" parameterType="java.lang.String">
+        select
+        <include refid="column_list"/>
+        from
+        <include refid="table_name"/>
+        <where>
+            `id`
+            <foreach collection="array" item="id" open="in (" close=")"
+                     separator=",">
+            #{id}
+            </foreach>
+        </where>
+    </select>
+
+    <!-- 根据主键查找 -->
+    <select id="selectByPrimaryKey" resultMap="resultMap" parameterType="java.lang.String">
+        select
+        <include refid="column_list"/>
+        from
+        <include refid="table_name"/>
+        <where>`id` = #{id}</where>
+    </select>
+
+    <!-- 根据多个主键查找 -->
+    <select id="selectByPrimaryKeys" resultMap="resultMap" parameterType="java.lang.String">
+        select
+        <include refid="column_list"/>
+        from
+        <include refid="table_name"/>
+        <where>
+            `id`
+            <foreach collection="array" item="id" open="in (" close=")"
+                     separator=",">
+            #{id}
+            </foreach>
+        </where>
+    </select>
+
+    <!-- 根据查询条件(Map)查找 -->
+    <select id="listByParam" resultMap="resultMap" parameterType="java.util.Map">
+        select
+        <include refid="column_list"/>
+        from
+        <include refid="table_name"/>
+        <where>
+            <include refid="condition_sql"/>
+        </where>
+    </select>
+
+    <!-- 根据分页参数和查询条件(Map)查找 -->
+    <select id="listByPageAndParam" resultMap="resultMap" parameterType="java.util.Map">
+        select
+        <include refid="column_list"/>
+        from
+        <include refid="table_name"/>
+        <where>
+            <include refid="condition_sql"/>
+        </where>
+        <if test="sortColumn != null and sortColumn != ''">
+            order by ${sortColumn}
+        </if>
+    </select>
+
+    <!-- 根据查询条件查找 -->
+    <select id="selectByCondition" resultMap="resultMap" parameterType="cc.xuepeng.entity.RoleMenuRelationCondition">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="column_list"/>
+        from
+        <include refid="table_name"/>
+        <where>
+            <include refid="select_condition_sql"/>
+        </where>
+        <if test="orderBy != null and orderBy != ''" >
+            order by ${orderBy}
+        </if>
+    </select>
+
+    <!-- 根据查询条件(Map)查询数量 -->
+    <select id="countByParam" resultType="java.lang.Long" parameterType="java.util.Map">
+        select count(0) from
+        <include refid="table_name"/>
+        <where>
+            <include refid="condition_sql"/>
+        </where>
+    </select>
+
+    <!-- 根据查询条件查询数量 -->
+    <select id="countByCondition" resultType="java.lang.Long"
+            parameterType="cc.xuepeng.entity.RoleMenuRelationCondition">
+        select count(0) from
+        <include refid="table_name"/>
+        <where>
+            <include refid="select_condition_sql"/>
+        </where>
+    </select>
+
+</mapper>

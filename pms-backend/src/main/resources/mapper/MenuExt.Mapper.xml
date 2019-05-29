@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cc.xuepeng.dao.impl.UserExtDaoImpl">
+<mapper namespace="cc.xuepeng.dao.impl.MenuExtDaoImpl">
     <!-- 表名 -->
-    <sql id="table_name"> user </sql>
+    <sql id="table_name"> menu </sql>
     <!-- 列名 -->
     <sql id="column_list">
             id, 
-            license_id, 
-            account, 
-            secret, 
-            name, 
-            phone, 
-            email, 
-            photo, 
-            status, 
+            pid, 
+            title, 
+            icon, 
+            path, 
+            sort, 
             deleted, 
             remark, 
             create_user, 
@@ -23,16 +20,13 @@
     </sql>
 
     <!-- ORM映射关系 -->
-    <resultMap id="resultMap" type="cc.xuepeng.entity.User">
+    <resultMap id="resultMap" type="cc.xuepeng.entity.Menu">
         <id column="id" property="id"/>
-        <result column="license_id" property="licenseId"/>
-        <result column="account" property="account"/>
-        <result column="secret" property="secret"/>
-        <result column="name" property="name"/>
-        <result column="phone" property="phone"/>
-        <result column="email" property="email"/>
-        <result column="photo" property="photo"/>
-        <result column="status" property="status"/>
+        <result column="pid" property="pid"/>
+        <result column="title" property="title"/>
+        <result column="icon" property="icon"/>
+        <result column="path" property="path"/>
+        <result column="sort" property="sort"/>
         <result column="deleted" property="deleted"/>
         <result column="remark" property="remark"/>
         <result column="create_user" property="createUser"/>

@@ -1,4 +1,4 @@
-package cc.xuepeng.service;
+package cc.xuepeng.service.business;
 
 import cc.xuepeng.entity.Fee;
 import cn.yesway.framework.common.entity.page.PageParam;
@@ -68,5 +68,20 @@ public interface FeeService {
      * @return 费用类型是否存在。
      */
     boolean isExistsByName(final String name);
+
+    /**
+     * 查询父级费用类型。
+     *
+     * @return 费用类型集合。
+     */
+    List<Fee> findParent();
+
+    /**
+     * 查询子级费用类型。
+     *
+     * @param id 主键。
+     * @return 费用类型集合。
+     */
+    List<Fee> findChildren(final String id);
 
 }

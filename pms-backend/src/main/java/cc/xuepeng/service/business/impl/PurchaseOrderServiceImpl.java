@@ -1,11 +1,11 @@
-package cc.xuepeng.service.impl;
+package cc.xuepeng.service.business.impl;
 
 import cc.xuepeng.dao.CommodityExtDao;
 import cc.xuepeng.dao.ProjectExtDao;
 import cc.xuepeng.dao.PurchaseOrderDao;
 import cc.xuepeng.dao.SupplierExtDao;
 import cc.xuepeng.entity.*;
-import cc.xuepeng.service.PurchaseOrderService;
+import cc.xuepeng.service.business.PurchaseOrderService;
 import cn.yesway.framework.common.entity.page.PageParam;
 import cn.yesway.framework.common.entity.page.PageResult;
 import cn.yesway.framework.common.util.PKUtil;
@@ -111,6 +111,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         setRelationInformation(result.getRecord());
         return result;
     }
+
 
     private void setRelationInformation(List<PurchaseOrder> orders) {
         Map<String, Supplier> suppliers = supplierExtDao.findAllToMap();

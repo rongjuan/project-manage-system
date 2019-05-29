@@ -1,7 +1,7 @@
 package cc.xuepeng.controller;
 
 import cc.xuepeng.entity.PurchaseOrder;
-import cc.xuepeng.service.PurchaseOrderService;
+import cc.xuepeng.service.business.PurchaseOrderService;
 import cn.yesway.framework.common.entity.http.DefaultHttpResultFactory;
 import cn.yesway.framework.common.entity.http.HttpResult;
 import cn.yesway.framework.common.entity.page.PageParam;

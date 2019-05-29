@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cc.xuepeng.dao.impl.UserDaoImpl">
+<mapper namespace="cc.xuepeng.dao.impl.RoleDaoImpl">
     <!-- 表名 -->
-    <sql id="table_name"> `user` </sql>
+    <sql id="table_name"> `role` </sql>
     <!-- 列名 -->
     <sql id="column_list">
             `id`, 
-            `license_id`, 
-            `account`, 
-            `secret`, 
             `name`, 
-            `phone`, 
-            `email`, 
-            `photo`, 
             `status`, 
             `deleted`, 
             `remark`, 
@@ -26,26 +20,8 @@
         <if test="id != null and id != ''">
             and `id` = #{id}
         </if>
-        <if test="licenseId != null and licenseId != ''">
-            and `license_id` = #{licenseId}
-        </if>
-        <if test="account != null and account != ''">
-            and `account` = #{account}
-        </if>
-        <if test="secret != null and secret != ''">
-            and `secret` = #{secret}
-        </if>
         <if test="name != null and name != ''">
             and `name` = #{name}
-        </if>
-        <if test="phone != null and phone != ''">
-            and `phone` = #{phone}
-        </if>
-        <if test="email != null and email != ''">
-            and `email` = #{email}
-        </if>
-        <if test="photo != null and photo != ''">
-            and `photo` = #{photo}
         </if>
         <if test="status != null">
             and `status` = #{status}
@@ -131,15 +107,9 @@
     </sql>
 
     <!-- ORM映射关系 -->
-    <resultMap id="resultMap" type="cc.xuepeng.entity.User">
+    <resultMap id="resultMap" type="cc.xuepeng.entity.Role">
         <id column="id" property="id"/>
-        <result column="license_id" property="licenseId"/>
-        <result column="account" property="account"/>
-        <result column="secret" property="secret"/>
         <result column="name" property="name"/>
-        <result column="phone" property="phone"/>
-        <result column="email" property="email"/>
-        <result column="photo" property="photo"/>
         <result column="status" property="status"/>
         <result column="deleted" property="deleted"/>
         <result column="remark" property="remark"/>
@@ -150,7 +120,7 @@
     </resultMap>
 
     <!-- 全字段新增 -->
-    <insert id="insert" parameterType="cc.xuepeng.entity.User">
+    <insert id="insert" parameterType="cc.xuepeng.entity.Role">
         insert into
         <include refid="table_name"/>
         (
@@ -158,13 +128,7 @@
         )
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             #{id},
-            #{licenseId},
-            #{account},
-            #{secret},
             #{name},
-            #{phone},
-            #{email},
-            #{photo},
             #{status},
             #{deleted},
             #{remark},
@@ -176,33 +140,15 @@
     </insert>
 
     <!-- 非空字段新增 -->
-    <insert id="insertSelective" parameterType="cc.xuepeng.entity.User">
+    <insert id="insertSelective" parameterType="cc.xuepeng.entity.Role">
         insert into
         <include refid="table_name"/>
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">
                 `id`,
             </if>
-            <if test="licenseId != null and licenseId != ''">
-                `license_id`,
-            </if>
-            <if test="account != null and account != ''">
-                `account`,
-            </if>
-            <if test="secret != null and secret != ''">
-                `secret`,
-            </if>
             <if test="name != null and name != ''">
                 `name`,
-            </if>
-            <if test="phone != null and phone != ''">
-                `phone`,
-            </if>
-            <if test="email != null and email != ''">
-                `email`,
-            </if>
-            <if test="photo != null and photo != ''">
-                `photo`,
             </if>
             <if test="status != null">
                 `status`,
@@ -230,26 +176,8 @@
             <if test="id != null and id != ''">
                 #{id},
             </if>
-            <if test="licenseId != null and licenseId != ''">
-                #{licenseId},
-            </if>
-            <if test="account != null and account != ''">
-                #{account},
-            </if>
-            <if test="secret != null and secret != ''">
-                #{secret},
-            </if>
             <if test="name != null and name != ''">
                 #{name},
-            </if>
-            <if test="phone != null and phone != ''">
-                #{phone},
-            </if>
-            <if test="email != null and email != ''">
-                #{email},
-            </if>
-            <if test="photo != null and photo != ''">
-                #{photo},
             </if>
             <if test="status != null">
                 #{status},
@@ -276,7 +204,7 @@
     </insert>
 
     <!-- 全字段批量新增 -->
-    <insert id="insertBatch" parameterType="cc.xuepeng.entity.User">
+    <insert id="insertBatch" parameterType="cc.xuepeng.entity.Role">
         insert into
         <include refid="table_name"/>
         (
@@ -287,13 +215,7 @@
                  separator=",">
             <trim prefix="(" suffix=")" suffixOverrides=",">
                 #{item.id},
-                #{item.licenseId},
-                #{item.account},
-                #{item.secret},
                 #{item.name},
-                #{item.phone},
-                #{item.email},
-                #{item.photo},
                 #{item.status},
                 #{item.deleted},
                 #{item.remark},
@@ -306,7 +228,7 @@
     </insert>
 
     <!-- 非空字段批量新增 -->
-    <insert id="insertBatchSelective" parameterType="cc.xuepeng.entity.User">
+    <insert id="insertBatchSelective" parameterType="cc.xuepeng.entity.Role">
         insert into
         <include refid="table_name"/>
         <foreach collection="list" item="item" open=" " close="" separator="," index="index">
@@ -315,26 +237,8 @@
                     <if test="item.id != null and item.id != ''">
                         `id`,
                     </if>
-                    <if test="item.licenseId != null and item.licenseId != ''">
-                        `license_id`,
-                    </if>
-                    <if test="item.account != null and item.account != ''">
-                        `account`,
-                    </if>
-                    <if test="item.secret != null and item.secret != ''">
-                        `secret`,
-                    </if>
                     <if test="item.name != null and item.name != ''">
                         `name`,
-                    </if>
-                    <if test="item.phone != null and item.phone != ''">
-                        `phone`,
-                    </if>
-                    <if test="item.email != null and item.email != ''">
-                        `email`,
-                    </if>
-                    <if test="item.photo != null and item.photo != ''">
-                        `photo`,
                     </if>
                     <if test="item.status != null">
                         `status`,
@@ -367,26 +271,8 @@
             <if test="item.id != null and item.id != ''">
                 #{item.id},
             </if>
-            <if test="item.licenseId != null and item.licenseId != ''">
-                #{item.licenseId},
-            </if>
-            <if test="item.account != null and item.account != ''">
-                #{item.account},
-            </if>
-            <if test="item.secret != null and item.secret != ''">
-                #{item.secret},
-            </if>
             <if test="item.name != null and item.name != ''">
                 #{item.name},
-            </if>
-            <if test="item.phone != null and item.phone != ''">
-                #{item.phone},
-            </if>
-            <if test="item.email != null and item.email != ''">
-                #{item.email},
-            </if>
-            <if test="item.photo != null and item.photo != ''">
-                #{item.photo},
             </if>
             <if test="item.status != null">
                 #{item.status},
@@ -414,30 +300,12 @@
     </insert>
 
     <!-- 根据Id修改 -->
-    <update id="update" parameterType="cc.xuepeng.entity.User">
+    <update id="update" parameterType="cc.xuepeng.entity.Role">
         update
         <include refid="table_name"/>
         <set>
-            <if test="licenseId != null and licenseId != ''">
-                `license_id` = #{licenseId},
-            </if>
-            <if test="account != null and account != ''">
-                `account` = #{account},
-            </if>
-            <if test="secret != null and secret != ''">
-                `secret` = #{secret},
-            </if>
             <if test="name != null and name != ''">
                 `name` = #{name},
-            </if>
-            <if test="phone != null and phone != ''">
-                `phone` = #{phone},
-            </if>
-            <if test="email != null and email != ''">
-                `email` = #{email},
-            </if>
-            <if test="photo != null and photo != ''">
-                `photo` = #{photo},
             </if>
             <if test="status != null">
                 `status` = #{status},
@@ -465,17 +333,11 @@
     </update>
 
     <!-- 根据Id全字段修改 -->
-    <update id="updateByPrimaryKey" parameterType="cc.xuepeng.entity.User">
+    <update id="updateByPrimaryKey" parameterType="cc.xuepeng.entity.Role">
         update
         <include refid="table_name"/>
         <set>
-                `license_id` = #{licenseId},
-                `account` = #{account},
-                `secret` = #{secret},
                 `name` = #{name},
-                `phone` = #{phone},
-                `email` = #{email},
-                `photo` = #{photo},
                 `status` = #{status},
                 `deleted` = #{deleted},
                 `remark` = #{remark},
@@ -488,30 +350,12 @@
     </update>
 
     <!-- 根据Id非空字段修改 -->
-    <update id="updateByPrimaryKeySelective" parameterType="cc.xuepeng.entity.User">
+    <update id="updateByPrimaryKeySelective" parameterType="cc.xuepeng.entity.Role">
         update
         <include refid="table_name"/>
         <set>
-            <if test="licenseId != null and licenseId != ''">
-                `license_id` = #{licenseId},
-            </if>
-            <if test="account != null and account != ''">
-                `account` = #{account},
-            </if>
-            <if test="secret != null and secret != ''">
-                `secret` = #{secret},
-            </if>
             <if test="name != null and name != ''">
                 `name` = #{name},
-            </if>
-            <if test="phone != null and phone != ''">
-                `phone` = #{phone},
-            </if>
-            <if test="email != null and email != ''">
-                `email` = #{email},
-            </if>
-            <if test="photo != null and photo != ''">
-                `photo` = #{photo},
             </if>
             <if test="status != null">
                 `status` = #{status},
@@ -543,13 +387,7 @@
         update
         <include refid="table_name"/>
         <set>
-                `license_id` = #{entity.licenseId},
-                `account` = #{entity.account},
-                `secret` = #{entity.secret},
                 `name` = #{entity.name},
-                `phone` = #{entity.phone},
-                `email` = #{entity.email},
-                `photo` = #{entity.photo},
                 `status` = #{entity.status},
                 `deleted` = #{entity.deleted},
                 `remark` = #{entity.remark},
@@ -570,26 +408,8 @@
         update
         <include refid="table_name"/>
         <set>
-            <if test="entity.licenseId != null and entity.licenseId != ''">
-                `license_id` = #{entity.licenseId},
-            </if>
-            <if test="entity.account != null and entity.account != ''">
-                `account` = #{entity.account},
-            </if>
-            <if test="entity.secret != null and entity.secret != ''">
-                `secret` = #{entity.secret},
-            </if>
             <if test="entity.name != null and entity.name != ''">
                 `name` = #{entity.name},
-            </if>
-            <if test="entity.phone != null and entity.phone != ''">
-                `phone` = #{entity.phone},
-            </if>
-            <if test="entity.email != null and entity.email != ''">
-                `email` = #{entity.email},
-            </if>
-            <if test="entity.photo != null and entity.photo != ''">
-                `photo` = #{entity.photo},
             </if>
             <if test="entity.status != null">
                 `status` = #{entity.status},
@@ -661,7 +481,7 @@
     </delete>
 
     <!-- 根据条件删除 -->
-    <delete id="deleteByCondition" parameterType="cc.xuepeng.entity.UserCondition">
+    <delete id="deleteByCondition" parameterType="cc.xuepeng.entity.RoleCondition">
         delete from
         <include refid="table_name"/>
         <where>
@@ -743,7 +563,7 @@
     </select>
 
     <!-- 根据查询条件查找 -->
-    <select id="selectByCondition" resultMap="resultMap" parameterType="cc.xuepeng.entity.UserCondition">
+    <select id="selectByCondition" resultMap="resultMap" parameterType="cc.xuepeng.entity.RoleCondition">
         select
         <if test="distinct">
             distinct
@@ -770,7 +590,7 @@
 
     <!-- 根据查询条件查询数量 -->
     <select id="countByCondition" resultType="java.lang.Long"
-            parameterType="cc.xuepeng.entity.UserCondition">
+            parameterType="cc.xuepeng.entity.RoleCondition">
         select count(0) from
         <include refid="table_name"/>
         <where>

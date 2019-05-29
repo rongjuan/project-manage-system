@@ -1,4 +1,4 @@
-package cc.xuepeng.service.impl;
+package cc.xuepeng.service.business.impl;
 
 import cc.xuepeng.dao.ProjectDao;
 import cc.xuepeng.dao.UserExtDao;
@@ -6,7 +6,7 @@ import cc.xuepeng.entity.Project;
 import cc.xuepeng.entity.ProjectCondition;
 import cc.xuepeng.entity.User;
 import cc.xuepeng.enums.ProjectStatus;
-import cc.xuepeng.service.ProjectService;
+import cc.xuepeng.service.business.ProjectService;
 import cn.yesway.framework.common.entity.page.PageParam;
 import cn.yesway.framework.common.entity.page.PageResult;
 import cn.yesway.framework.common.util.PKUtil;
@@ -157,7 +157,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<Project> findAll() {
         ProjectCondition condition = new ProjectCondition();
-        condition.createCriteria().andIsDeleteEqualTo(false);
+        condition.createCriteria().andIsDeleteEqualTo(Boolean.FALSE);
         List<Project> result = projectDao.selectByCondition(condition);
         setUser(result);
         return result;
@@ -172,7 +172,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public PageResult<Project> findByPage(final PageParam pageParam) {
         ProjectCondition condition = new ProjectCondition();
-        condition.createCriteria().andIsDeleteEqualTo(false);
+        condition.createCriteria().andIsDeleteEqualTo(Boolean.FALSE);
         PageResult<Project> result = projectDao.selectByConditionAndPage(condition, pageParam);
         setUser(result.getRecord());
         return result;
@@ -189,7 +189,7 @@ public class ProjectServiceImpl implements ProjectService {
     public boolean isExistsByName(final String name) {
         ProjectCondition condition = new ProjectCondition();
         condition.createCriteria()
-                .andIsDeleteEqualTo(false)
+                .andIsDeleteEqualTo(Boolean.FALSE)
                 .andNameEqualTo(name);
         return projectDao.countByCondition(condition) > 0;
     }
@@ -210,4 +210,5 @@ public class ProjectServiceImpl implements ProjectService {
      * 用户持久化服务接口。
      */
     private UserExtDao userExtDao;
+
 }

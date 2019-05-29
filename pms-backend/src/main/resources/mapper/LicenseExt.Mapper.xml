@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.xuepeng.dao.impl.LicenseExtDaoImpl">
+    <!-- 表名 -->
+    <sql id="table_name"> license </sql>
+    <!-- 列名 -->
+    <sql id="column_list">
+            id, 
+            company, 
+            expire_date, 
+            remark
+    </sql>
+
+    <!-- ORM映射关系 -->
+    <resultMap id="resultMap" type="cc.xuepeng.entity.License">
+        <id column="id" property="id"/>
+        <result column="company" property="company"/>
+        <result column="expire_date" property="expireDate"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+</mapper>

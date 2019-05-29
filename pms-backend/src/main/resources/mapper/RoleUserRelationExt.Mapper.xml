@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.xuepeng.dao.impl.RoleUserRelationExtDaoImpl">
+    <!-- 表名 -->
+    <sql id="table_name"> role_user_relation </sql>
+    <!-- 列名 -->
+    <sql id="column_list">
+            id, 
+            role_id, 
+            user_id
+    </sql>
+
+    <!-- ORM映射关系 -->
+    <resultMap id="resultMap" type="cc.xuepeng.entity.RoleUserRelation">
+        <id column="id" property="id"/>
+        <result column="role_id" property="roleId"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+
+</mapper>

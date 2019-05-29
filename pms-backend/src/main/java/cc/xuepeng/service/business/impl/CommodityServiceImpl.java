@@ -1,11 +1,11 @@
-package cc.xuepeng.service.impl;
+package cc.xuepeng.service.business.impl;
 
 import cc.xuepeng.dao.CommodityDao;
 import cc.xuepeng.dao.FeeExtDao;
 import cc.xuepeng.entity.Commodity;
 import cc.xuepeng.entity.CommodityCondition;
 import cc.xuepeng.entity.Fee;
-import cc.xuepeng.service.CommodityService;
+import cc.xuepeng.service.business.CommodityService;
 import cn.yesway.framework.common.entity.page.PageParam;
 import cn.yesway.framework.common.entity.page.PageResult;
 import cn.yesway.framework.common.util.PKUtil;
@@ -95,7 +95,7 @@ public class CommodityServiceImpl implements CommodityService {
     @Override
     public List<Commodity> findAll() {
         CommodityCondition condition = new CommodityCondition();
-        condition.createCriteria().andIsDeleteEqualTo(false);
+        condition.createCriteria().andIsDeleteEqualTo(Boolean.FALSE);
         List<Commodity> result = commodityDao.selectByCondition(condition);
         setFeeName(result);
         return result;
@@ -110,7 +110,7 @@ public class CommodityServiceImpl implements CommodityService {
     @Override
     public PageResult<Commodity> findByPage(final PageParam pageParam) {
         CommodityCondition condition = new CommodityCondition();
-        condition.createCriteria().andIsDeleteEqualTo(false);
+        condition.createCriteria().andIsDeleteEqualTo(Boolean.FALSE);
         PageResult<Commodity> result = commodityDao.selectByConditionAndPage(condition, pageParam);
         setFeeName(result.getRecord());
         return result;
@@ -127,11 +127,16 @@ public class CommodityServiceImpl implements CommodityService {
     public boolean isExistsByName(final String name) {
         CommodityCondition condition = new CommodityCondition();
         condition.createCriteria()
-                .andIsDeleteEqualTo(false)
+                .andIsDeleteEqualTo(Boolean.FALSE)
                 .andNameEqualTo(name);
         return commodityDao.countByCondition(condition) > 0;
     }
 
+    /**
+     * 设置商品的名称。
+     *
+     * @param commodities 商品集合。
+     */
     private void setFeeName(List<Commodity> commodities) {
         // 设置费用类型名称
         Map<String, Fee> fees = feeExtDao.findAllToMap();
@@ -149,4 +154,5 @@ public class CommodityServiceImpl implements CommodityService {
      * 费用类型持久化服务接口。
      */
     private FeeExtDao feeExtDao;
+
 }

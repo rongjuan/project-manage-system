@@ -1,9 +1,9 @@
-package cc.xuepeng.service.impl;
+package cc.xuepeng.service.business.impl;
 
 import cc.xuepeng.dao.SupplierDao;
 import cc.xuepeng.entity.Supplier;
 import cc.xuepeng.entity.SupplierCondition;
-import cc.xuepeng.service.SupplierService;
+import cc.xuepeng.service.business.SupplierService;
 import cn.yesway.framework.common.entity.page.PageParam;
 import cn.yesway.framework.common.entity.page.PageResult;
 import cn.yesway.framework.common.util.PKUtil;
@@ -90,7 +90,7 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public List<Supplier> findAll() {
         SupplierCondition condition = new SupplierCondition();
-        condition.createCriteria().andIsDeleteEqualTo(false);
+        condition.createCriteria().andIsDeleteEqualTo(Boolean.FALSE);
         return supplierDao.selectByCondition(condition);
     }
 
@@ -103,7 +103,7 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public PageResult<Supplier> findByPage(final PageParam pageParam) {
         SupplierCondition condition = new SupplierCondition();
-        condition.createCriteria().andIsDeleteEqualTo(false);
+        condition.createCriteria().andIsDeleteEqualTo(Boolean.FALSE);
         return supplierDao.selectByConditionAndPage(condition, pageParam);
     }
 
@@ -118,7 +118,7 @@ public class SupplierServiceImpl implements SupplierService {
     public boolean isExistsByName(final String name) {
         SupplierCondition condition = new SupplierCondition();
         condition.createCriteria()
-                .andIsDeleteEqualTo(false)
+                .andIsDeleteEqualTo(Boolean.FALSE)
                 .andNameEqualTo(name);
         return supplierDao.countByCondition(condition) > 0;
     }
