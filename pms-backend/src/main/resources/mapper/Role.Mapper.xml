@@ -6,6 +6,7 @@
     <!-- 列名 -->
     <sql id="column_list">
             `id`, 
+            `license_id`, 
             `name`, 
             `status`, 
             `deleted`, 
@@ -19,6 +20,9 @@
     <sql id="condition_sql">
         <if test="id != null and id != ''">
             and `id` = #{id}
+        </if>
+        <if test="licenseId != null and licenseId != ''">
+            and `license_id` = #{licenseId}
         </if>
         <if test="name != null and name != ''">
             and `name` = #{name}
@@ -109,6 +113,7 @@
     <!-- ORM映射关系 -->
     <resultMap id="resultMap" type="cc.xuepeng.entity.Role">
         <id column="id" property="id"/>
+        <result column="license_id" property="licenseId"/>
         <result column="name" property="name"/>
         <result column="status" property="status"/>
         <result column="deleted" property="deleted"/>
@@ -128,6 +133,7 @@
         )
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             #{id},
+            #{licenseId},
             #{name},
             #{status},
             #{deleted},
@@ -146,6 +152,9 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">
                 `id`,
+            </if>
+            <if test="licenseId != null and licenseId != ''">
+                `license_id`,
             </if>
             <if test="name != null and name != ''">
                 `name`,
@@ -175,6 +184,9 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">
                 #{id},
+            </if>
+            <if test="licenseId != null and licenseId != ''">
+                #{licenseId},
             </if>
             <if test="name != null and name != ''">
                 #{name},
@@ -215,6 +227,7 @@
                  separator=",">
             <trim prefix="(" suffix=")" suffixOverrides=",">
                 #{item.id},
+                #{item.licenseId},
                 #{item.name},
                 #{item.status},
                 #{item.deleted},
@@ -236,6 +249,9 @@
                 <trim prefix="(" suffix=")" suffixOverrides=",">
                     <if test="item.id != null and item.id != ''">
                         `id`,
+                    </if>
+                    <if test="item.licenseId != null and item.licenseId != ''">
+                        `license_id`,
                     </if>
                     <if test="item.name != null and item.name != ''">
                         `name`,
@@ -271,6 +287,9 @@
             <if test="item.id != null and item.id != ''">
                 #{item.id},
             </if>
+            <if test="item.licenseId != null and item.licenseId != ''">
+                #{item.licenseId},
+            </if>
             <if test="item.name != null and item.name != ''">
                 #{item.name},
             </if>
@@ -304,6 +323,9 @@
         update
         <include refid="table_name"/>
         <set>
+            <if test="licenseId != null and licenseId != ''">
+                `license_id` = #{licenseId},
+            </if>
             <if test="name != null and name != ''">
                 `name` = #{name},
             </if>
@@ -337,6 +359,7 @@
         update
         <include refid="table_name"/>
         <set>
+                `license_id` = #{licenseId},
                 `name` = #{name},
                 `status` = #{status},
                 `deleted` = #{deleted},
@@ -354,6 +377,9 @@
         update
         <include refid="table_name"/>
         <set>
+            <if test="licenseId != null and licenseId != ''">
+                `license_id` = #{licenseId},
+            </if>
             <if test="name != null and name != ''">
                 `name` = #{name},
             </if>
@@ -387,6 +413,7 @@
         update
         <include refid="table_name"/>
         <set>
+                `license_id` = #{entity.licenseId},
                 `name` = #{entity.name},
                 `status` = #{entity.status},
                 `deleted` = #{entity.deleted},
@@ -408,6 +435,9 @@
         update
         <include refid="table_name"/>
         <set>
+            <if test="entity.licenseId != null and entity.licenseId != ''">
+                `license_id` = #{entity.licenseId},
+            </if>
             <if test="entity.name != null and entity.name != ''">
                 `name` = #{entity.name},
             </if>

@@ -9,14 +9,14 @@ import cc.xuepeng.exception.UserAuthenticationException;
 import cc.xuepeng.service.menu.MenuService;
 import cc.xuepeng.service.role.RoleService;
 import cc.xuepeng.service.user.formatter.UserMenuFormatter;
+import cn.yesway.framework.common.entity.page.PageParam;
+import cn.yesway.framework.common.entity.page.PageResult;
 import cn.yesway.framework.common.util.JWTUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -48,7 +48,10 @@ public class UserServiceImpl implements UserService {
             throw new UserAuthenticationException("用户认证失败。");
         }
         // 创建JWT
-        return JWTUtil.create(user.getId(), JWTConst.SECRET);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("id", user.getId());
+        claims.put("license", user.getLicenseId());
+        return JWTUtil.create(claims, JWTConst.SECRET);
     }
 
     /**
@@ -63,7 +66,7 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isBlank(token)) {
             throw new NullPointerException("用户令牌（Token）不能为空。");
         }
-        String userId = JWTUtil.get(token, JWTConst.SECRET);
+        String userId = JWTUtil.get(token, JWTConst.SECRET, "id");
         if (StringUtils.isBlank(userId)) {
             throw new NullPointerException("非法的用户令牌。");
         }
@@ -72,6 +75,24 @@ public class UserServiceImpl implements UserService {
         // 查询用户的菜单。
         user.setMenus(findMenusById(userId));
         return user;
+    }
+
+    /**
+     * 查询用户信息。
+     *
+     * @param user      查询信息。
+     * @param pageParam 分页信息。
+     * @return 用户信息。
+     */
+    @Override
+    public PageResult<User> findByConditionAndPage(final User user, final PageParam pageParam) {
+        UserCondition condition = new UserCondition();
+        condition.createCriteria().andLicenseIdEqualTo(user.getLicenseId())
+                .andAccountLikeOnBoth(user.getAccount())
+                .andNameLikeOnBoth(user.getName())
+                .andPhoneLikeOnBoth(user.getPhone())
+                .andEmailLikeOnBoth(user.getEmail());
+        return userDao.selectByConditionAndPage(condition, pageParam);
     }
 
     /**

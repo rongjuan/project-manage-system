@@ -9,7 +9,8 @@ import cn.yesway.framework.common.entity.http.HttpResultStatus;
  */
 public enum CustomHttpResultStatus implements HttpResultStatus {
 
-    USER_AUTHENTICATION_FAILED(60001, "用户认证失败。");
+    USER_AUTHENTICATION_FAILED(60001, "用户认证失败。"),
+    USER_IDENTITY_ILLEGAL(60002, "用户身份非法。");
 
     /**
      * 构造函数。

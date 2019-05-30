@@ -2,10 +2,16 @@ package cc.xuepeng.controller;
 
 import cc.xuepeng.entity.User;
 import cc.xuepeng.service.user.UserService;
+import cc.xuepeng.vo.UserQueryVO;
 import cn.yesway.framework.common.entity.http.DefaultHttpResultFactory;
 import cn.yesway.framework.common.entity.http.HttpResult;
+import cn.yesway.framework.common.entity.page.PageResult;
+import cn.yesway.framework.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 用户的控制器。
@@ -31,13 +37,25 @@ public class UserController {
     /**
      * 根据用户令牌查询用户信息。
      *
-     * @param token 用户令牌。
+     * @param headers HttpHeader对象。
      * @return 用户信息。
      */
-    @GetMapping("/v1/user/{token}")
-    HttpResult findByToken(@PathVariable(value = "token") final String token) {
-        final User result = userService.findUserByToken(token);
+    @GetMapping("/v1/user/info")
+    HttpResult findByToken(@RequestHeader HttpHeaders headers) {
+        final User result = userService.findUserByToken(headers.getFirst("X-Access-Token"));
         return DefaultHttpResultFactory.success("根据主键查询用户成功。", result);
+    }
+
+    /**
+     * @return 查询用户信息。
+     */
+    @PostMapping("/v1/user")
+    HttpResult findUsers(@RequestBody final UserQueryVO userQueryVO, HttpServletRequest request) {
+        userQueryVO.setLicenseId(request.getAttribute("license").toString());
+        PageResult<User> result = userService.findByConditionAndPage(
+                BeanUtil.objToObj(userQueryVO, User.class),
+                userQueryVO.getPage());
+        return DefaultHttpResultFactory.success("查询用户成功。", result);
     }
 
     /**

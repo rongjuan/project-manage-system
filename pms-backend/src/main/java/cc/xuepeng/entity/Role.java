@@ -1,6 +1,7 @@
 package cc.xuepeng.entity;
 
 import cn.yesway.framework.common.entity.base.BaseEntity;
+
 import java.io.Serializable;
 
 /**
@@ -13,6 +14,21 @@ public class Role extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * @return 获取许可证主键。
+     */
+    public String getLicenseId() {
+        return this.licenseId;
+    }
+
+    /**
+     * 设置许可证主键。
+     *
+     * @param licenseId 许可证主键。
+     */
+    public void setLicenseId(String licenseId) {
+        this.licenseId = licenseId;
+    }
     /**
      * @return 获取名称。
      */
@@ -197,6 +213,10 @@ public class Role extends BaseEntity implements Serializable {
         this.modifyTimeEnd = (modifyTimeEnd == null ? null : (java.util.Date) modifyTimeEnd.clone());
     }
 
+    /**
+     * 许可证主键。
+     */
+    private String licenseId = "";
     /**
      * 名称。
      */

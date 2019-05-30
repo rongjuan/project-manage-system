@@ -6,6 +6,7 @@
     <!-- 列名 -->
     <sql id="column_list">
             id, 
+            license_id, 
             name, 
             status, 
             deleted, 
@@ -19,6 +20,7 @@
     <!-- ORM映射关系 -->
     <resultMap id="resultMap" type="cc.xuepeng.entity.Role">
         <id column="id" property="id"/>
+        <result column="license_id" property="licenseId"/>
         <result column="name" property="name"/>
         <result column="status" property="status"/>
         <result column="deleted" property="deleted"/>

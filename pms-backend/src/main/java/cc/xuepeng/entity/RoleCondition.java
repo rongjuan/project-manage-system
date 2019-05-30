@@ -295,6 +295,109 @@ public class RoleCondition implements Serializable {
             addCriterion("`id` not between", value1, value2, ID);
             return (Criteria) this;
         }
+        private static final String LICENSEID = "licenseId";
+
+        public Criteria andLicenseIdIsNull() {
+            addCriterion("`license_id` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdIsNotNull() {
+            addCriterion("`license_id` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdEqualTo(String value) {
+            addCriterion("`license_id` =", value, LICENSEID);
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdNotEqualTo(String value) {
+            addCriterion("`license_id` <>", value, LICENSEID);
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdGreaterThan(String value) {
+            addCriterion("`license_id` >", value, LICENSEID);
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdGreaterThanOrEqualTo(String value) {
+            addCriterion("`license_id` >=", value, LICENSEID);
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdLessThan(String value) {
+            addCriterion("`license_id` <", value, LICENSEID);
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdLessThanOrEqualTo(String value) {
+            addCriterion("`license_id` <=", value, LICENSEID);
+            return (Criteria) this;
+        }
+
+        private static final String LICENSEID_LIKE = "`license_id` like";
+        private static final String LICENSEID_NOT_LIKE = "`license_id` not like";
+
+        public Criteria andLicenseIdLike(String value) {
+            addCriterion(LICENSEID_LIKE, value, LICENSEID);
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdLikeOnLeft(String value) {
+            addCriterion(LICENSEID_LIKE, "%" + value, LICENSEID);
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdLikeOnRight(String value) {
+            addCriterion(LICENSEID_LIKE, value + "%", LICENSEID);
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdLikeOnBoth(String value) {
+            addCriterion(LICENSEID_LIKE, "%" + value + "%", LICENSEID);
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdNotLike(String value) {
+            addCriterion(LICENSEID_NOT_LIKE, value, LICENSEID);
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdNotLikeOnLeft(String value) {
+            addCriterion(LICENSEID_NOT_LIKE, "%" + value, LICENSEID);
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdNotLikeOnRight(String value) {
+            addCriterion(LICENSEID_NOT_LIKE, value + "%", LICENSEID);
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdNotLikeOnBoth(String value) {
+            addCriterion(LICENSEID_NOT_LIKE, "%" + value + "%", LICENSEID);
+            return (Criteria) this;
+        }
+        public Criteria andLicenseIdIn(List<String> values) {
+            addCriterion("`license_id` in", values, LICENSEID);
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdNotIn(List<String> values) {
+            addCriterion("`license_id` not in", values, LICENSEID);
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdBetween(String value1, String value2) {
+            addCriterion("`license_id` between", value1, value2, LICENSEID);
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenseIdNotBetween(String value1, String value2) {
+            addCriterion("`license_id` not between", value1, value2, LICENSEID);
+            return (Criteria) this;
+        }
         private static final String NAME = "name";
 
         public Criteria andNameIsNull() {
