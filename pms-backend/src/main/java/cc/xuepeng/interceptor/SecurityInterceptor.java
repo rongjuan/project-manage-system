@@ -59,6 +59,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
         // 从HttpHeader中获取License，放到Request中
         // TODO 后续修改成放到body中
         request.setAttribute("license", JWTUtil.get(token, JWTConst.SECRET, "license"));
+        request.setAttribute("user", JWTUtil.get(token, JWTConst.SECRET, "id"));
         return true;
     }
 

@@ -1,4 +1,4 @@
-package cc.xuepeng.service.user.formatter;
+package cc.xuepeng.service.menu.formatter;
 
 import cc.xuepeng.entity.Menu;
 import org.apache.commons.lang3.StringUtils;
@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service("userMenuFormatter")
-public class DefaultUserMenuFormatter implements UserMenuFormatter {
+@Service("menuLevelFormatter")
+public class MenuLevelFormatterImpl implements MenuLevelFormatter {
 
     /**
      * 格式化用户菜单。
@@ -25,6 +25,12 @@ public class DefaultUserMenuFormatter implements UserMenuFormatter {
         return roots;
     }
 
+    /**
+     * 递归创建菜单层级。
+     *
+     * @param parent 父菜单。
+     * @param nodes  菜单信息。
+     */
     private void createMenuTree(final Menu parent, final List<Menu> nodes) {
         nodes.stream()
                 .filter(node -> StringUtils.equals(node.getPid(), parent.getId()))

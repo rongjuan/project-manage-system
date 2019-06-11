@@ -7,26 +7,10 @@ import cn.yesway.framework.common.entity.page.PageParam;
  *
  * @author xuepeng
  */
-public class UserQueryVO {
+public class RoleQueryVO {
 
     /**
-     * @return 获得账号。
-     */
-    public String getAccount() {
-        return account;
-    }
-
-    /**
-     * 设置账号。
-     *
-     * @param account 账号。
-     */
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    /**
-     * @return 名称。
+     * @return 获得名称。
      */
     public String getName() {
         return name;
@@ -39,38 +23,6 @@ public class UserQueryVO {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     * @return 获得电话。
-     */
-    public String getPhone() {
-        return phone;
-    }
-
-    /**
-     * 设置电话。
-     *
-     * @param phone 电话。
-     */
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    /**
-     * @return 获得邮件。
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * 设置邮件。
-     *
-     * @param email 邮件。
-     */
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     /**
@@ -106,21 +58,9 @@ public class UserQueryVO {
     }
 
     /**
-     * 账号。
-     */
-    private String account = "";
-    /**
      * 名称。
      */
     private String name = "";
-    /**
-     * 电话。
-     */
-    private String phone = "";
-    /**
-     * 邮箱。
-     */
-    private String email = "";
     /**
      * 许可证。
      */

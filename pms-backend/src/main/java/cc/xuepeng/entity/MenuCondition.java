@@ -839,51 +839,94 @@ public class MenuCondition implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andRemarkEqualTo(Integer value) {
+        public Criteria andRemarkEqualTo(String value) {
             addCriterion("`remark` =", value, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkNotEqualTo(Integer value) {
+        public Criteria andRemarkNotEqualTo(String value) {
             addCriterion("`remark` <>", value, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkGreaterThan(Integer value) {
+        public Criteria andRemarkGreaterThan(String value) {
             addCriterion("`remark` >", value, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkGreaterThanOrEqualTo(Integer value) {
+        public Criteria andRemarkGreaterThanOrEqualTo(String value) {
             addCriterion("`remark` >=", value, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkLessThan(Integer value) {
+        public Criteria andRemarkLessThan(String value) {
             addCriterion("`remark` <", value, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkLessThanOrEqualTo(Integer value) {
+        public Criteria andRemarkLessThanOrEqualTo(String value) {
             addCriterion("`remark` <=", value, REMARK);
             return (Criteria) this;
         }
-        public Criteria andRemarkIn(List<Integer> values) {
+
+        private static final String REMARK_LIKE = "`remark` like";
+        private static final String REMARK_NOT_LIKE = "`remark` not like";
+
+        public Criteria andRemarkLike(String value) {
+            addCriterion(REMARK_LIKE, value, REMARK);
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkLikeOnLeft(String value) {
+            addCriterion(REMARK_LIKE, "%" + value, REMARK);
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkLikeOnRight(String value) {
+            addCriterion(REMARK_LIKE, value + "%", REMARK);
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkLikeOnBoth(String value) {
+            addCriterion(REMARK_LIKE, "%" + value + "%", REMARK);
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotLike(String value) {
+            addCriterion(REMARK_NOT_LIKE, value, REMARK);
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotLikeOnLeft(String value) {
+            addCriterion(REMARK_NOT_LIKE, "%" + value, REMARK);
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotLikeOnRight(String value) {
+            addCriterion(REMARK_NOT_LIKE, value + "%", REMARK);
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotLikeOnBoth(String value) {
+            addCriterion(REMARK_NOT_LIKE, "%" + value + "%", REMARK);
+            return (Criteria) this;
+        }
+        public Criteria andRemarkIn(List<String> values) {
             addCriterion("`remark` in", values, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkNotIn(List<Integer> values) {
+        public Criteria andRemarkNotIn(List<String> values) {
             addCriterion("`remark` not in", values, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkBetween(Integer value1, Integer value2) {
+        public Criteria andRemarkBetween(String value1, String value2) {
             addCriterion("`remark` between", value1, value2, REMARK);
             return (Criteria) this;
         }
 
-        public Criteria andRemarkNotBetween(Integer value1, Integer value2) {
+        public Criteria andRemarkNotBetween(String value1, String value2) {
             addCriterion("`remark` not between", value1, value2, REMARK);
             return (Criteria) this;
         }

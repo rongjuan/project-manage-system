@@ -41,7 +41,7 @@
         <if test="deleted != null">
             and `deleted` = #{deleted}
         </if>
-        <if test="remark != null">
+        <if test="remark != null and remark != ''">
             and `remark` = #{remark}
         </if>
         <if test="createUser != null and createUser != ''">
@@ -183,7 +183,7 @@
             <if test="deleted != null">
                 `deleted`,
             </if>
-            <if test="remark != null">
+            <if test="remark != null and remark != ''">
                 `remark`,
             </if>
             <if test="createUser != null and createUser != ''">
@@ -221,7 +221,7 @@
             <if test="deleted != null">
                 #{deleted},
             </if>
-            <if test="remark != null">
+            <if test="remark != null and remark != ''">
                 #{remark},
             </if>
             <if test="createUser != null and createUser != ''">
@@ -294,7 +294,7 @@
                     <if test="item.deleted != null">
                         `deleted`,
                     </if>
-                    <if test="item.remark != null">
+                    <if test="item.remark != null and item.remark != ''">
                         `remark`,
                     </if>
                     <if test="item.createUser != null and item.createUser != ''">
@@ -337,7 +337,7 @@
             <if test="item.deleted != null">
                 #{item.deleted},
             </if>
-            <if test="item.remark != null">
+            <if test="item.remark != null and item.remark != ''">
                 #{item.remark},
             </if>
             <if test="item.createUser != null and item.createUser != ''">
@@ -379,7 +379,7 @@
             <if test="deleted != null">
                 `deleted` = #{deleted},
             </if>
-            <if test="remark != null">
+            <if test="remark != null and remark != ''">
                 `remark` = #{remark},
             </if>
             <if test="createUser != null and createUser != ''">
@@ -441,7 +441,7 @@
             <if test="deleted != null">
                 `deleted` = #{deleted},
             </if>
-            <if test="remark != null">
+            <if test="remark != null and remark != ''">
                 `remark` = #{remark},
             </if>
             <if test="createUser != null and createUser != ''">
@@ -507,7 +507,7 @@
             <if test="entity.deleted != null">
                 `deleted` = #{entity.deleted},
             </if>
-            <if test="entity.remark != null">
+            <if test="entity.remark != null and entity.remark != ''">
                 `remark` = #{entity.remark},
             </if>
             <if test="entity.createUser != null and entity.createUser != ''">

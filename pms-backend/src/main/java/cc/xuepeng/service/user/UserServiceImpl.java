@@ -1,17 +1,21 @@
 package cc.xuepeng.service.user;
 
 import cc.xuepeng.consts.JWTConst;
+import cc.xuepeng.consts.UserConst;
 import cc.xuepeng.dao.RoleUserRelationDao;
 import cc.xuepeng.dao.UserDao;
 import cc.xuepeng.entity.*;
 import cc.xuepeng.enums.UserStatus;
 import cc.xuepeng.exception.UserAuthenticationException;
 import cc.xuepeng.service.menu.MenuService;
+import cc.xuepeng.service.menu.formatter.MenuLevelFormatter;
 import cc.xuepeng.service.role.RoleService;
-import cc.xuepeng.service.user.formatter.UserMenuFormatter;
+import cc.xuepeng.service.user.secret.SecretGenerateStrategy;
 import cn.yesway.framework.common.entity.page.PageParam;
 import cn.yesway.framework.common.entity.page.PageResult;
+import cn.yesway.framework.common.security.md5.MD5Factory;
 import cn.yesway.framework.common.util.JWTUtil;
+import cn.yesway.framework.common.util.PKUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,9 +44,9 @@ public class UserServiceImpl implements UserService {
         UserCondition condition = new UserCondition();
         condition.createCriteria()
                 .andAccountEqualTo(account)
-                .andSecretEqualTo(secret)
+                .andSecretEqualTo(MD5Factory.getInstance().getMD5().encodeSalt(secret + UserConst.SALT))
                 .andStatusEqualTo((byte) UserStatus.AVAILABLE.ordinal()) // 启用的账号
-                .andDeletedEqualTo(Boolean.FALSE); // 为删除的账号
+                .andDeletedEqualTo(Boolean.FALSE); // 未删除的账号
         User user = userDao.selectOneByCondition(condition);
         if (Objects.isNull(user)) {
             throw new UserAuthenticationException("用户认证失败。");
@@ -91,8 +95,110 @@ public class UserServiceImpl implements UserService {
                 .andAccountLikeOnBoth(user.getAccount())
                 .andNameLikeOnBoth(user.getName())
                 .andPhoneLikeOnBoth(user.getPhone())
-                .andEmailLikeOnBoth(user.getEmail());
+                .andEmailLikeOnBoth(user.getEmail())
+                .andStatusEqualTo((byte) UserStatus.AVAILABLE.ordinal())
+                .andDeletedEqualTo(Boolean.FALSE);
         return userDao.selectByConditionAndPage(condition, pageParam);
+    }
+
+    /**
+     * 根据许可证查询用户信息。
+     *
+     * @param license 许可证。
+     * @return 用户信息。
+     */
+    @Override
+    public List<User> findByLicense(final String license) {
+        UserCondition condition = new UserCondition();
+        condition.createCriteria()
+                .andLicenseIdEqualTo(license)
+                .andStatusEqualTo((byte) UserStatus.AVAILABLE.ordinal())
+                .andDeletedEqualTo(Boolean.FALSE);
+        return userDao.selectByCondition(condition);
+    }
+
+    /**
+     * 根据主键查询用户。
+     *
+     * @param ids 主键。
+     * @return 用户信息。
+     */
+    public List<User> findByIds(final List<String> ids) {
+        UserCondition condition = new UserCondition();
+        condition.createCriteria()
+                .andStatusEqualTo((byte) UserStatus.AVAILABLE.ordinal())
+                .andDeletedEqualTo(Boolean.FALSE)
+                .andIdIn(ids);
+        return userDao.selectByCondition(condition);
+    }
+
+    /**
+     * 创建用户。
+     *
+     * @param user 用户信息。
+     * @return 是否创建成功。
+     */
+    @Override
+    public boolean create(final User user) {
+        user.setId(PKUtil.getRandomUUID());
+        user.setSecret(secretMD5Strategy.generate(UserConst.SECRET));
+        user.setStatus((byte) UserStatus.AVAILABLE.ordinal());
+        user.setDeleted(Boolean.FALSE);
+        return userDao.insertSelective(user) > 0;
+    }
+
+    /**
+     * 修改用户
+     *
+     * @param user 用户信息。
+     * @return 是否修改成功。
+     */
+    @Override
+    public boolean update(final User user) {
+        return userDao.updateByPrimaryKeySelective(user) > 0;
+    }
+
+    /**
+     * 删除用户。
+     *
+     * @param id 用户主键。
+     * @return 是否删除成功。
+     */
+    @Override
+    public boolean delete(final String id) {
+        User user = new User();
+        user.setId(id);
+        user.setDeleted(Boolean.TRUE);
+        return userDao.updateByPrimaryKeySelective(user) > 0;
+    }
+
+    /**
+     * 删除用户。
+     *
+     * @param ids 用户主键。
+     * @return 是否删除成功。
+     */
+    @Override
+    public boolean deleteBatch(final List<String> ids) {
+        User user = new User();
+        user.setDeleted(Boolean.TRUE);
+        UserCondition condition = new UserCondition();
+        condition.createCriteria().andIdIn(ids);
+        return userDao.updateByConditionSelective(user, condition) > 0;
+    }
+
+    /**
+     * 判断账号是否存在。
+     * 存在：True，不存在：False；
+     *
+     * @param account 账号。
+     * @return 是否存在。
+     */
+    @Override
+    public boolean existed(final String account) {
+        UserCondition condition = new UserCondition();
+        condition.createCriteria().andAccountEqualTo(account);
+        return userDao.countByCondition(condition) > 0;
     }
 
     /**
@@ -116,7 +222,7 @@ public class UserServiceImpl implements UserService {
         List<String> roleIds = findRoleIdsById(id);
         List<String> menuIds = roleService.findMenuIdsByIds(roleIds);
         List<Menu> menus = menuService.findByIds(menuIds);
-        return userMenuFormatter.format(menus);
+        return menuLevelFormatter.format(menus);
     }
 
     /**
@@ -177,13 +283,23 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 设置用户菜单格式化接口。
+     * 设置菜单层级格式化接口。
      *
-     * @param userMenuFormatter 用户菜单格式化接口。
+     * @param menuLevelFormatter 菜单层级格式化接口。
      */
     @Autowired
-    public void setUserMenuFormatter(UserMenuFormatter userMenuFormatter) {
-        this.userMenuFormatter = userMenuFormatter;
+    public void setMenuLevelFormatter(MenuLevelFormatter menuLevelFormatter) {
+        this.menuLevelFormatter = menuLevelFormatter;
+    }
+
+    /**
+     * 设置密码生成策略。
+     *
+     * @param secretMD5Strategy 密码生成策略。
+     */
+    @Autowired
+    public void setSecretMD5Strategy(SecretGenerateStrategy secretMD5Strategy) {
+        this.secretMD5Strategy = secretMD5Strategy;
     }
 
     /**
@@ -203,8 +319,12 @@ public class UserServiceImpl implements UserService {
      */
     private MenuService menuService;
     /**
-     * 用户菜单格式化接口。
+     * 菜单层级格式化接口。
      */
-    private UserMenuFormatter userMenuFormatter;
+    private MenuLevelFormatter menuLevelFormatter;
+    /**
+     * 密码生成策略。
+     */
+    private SecretGenerateStrategy secretMD5Strategy;
 
 }

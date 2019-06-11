@@ -1,4 +1,4 @@
-package cc.xuepeng.controller;
+package cc.xuepeng.controller.business;
 
 import cc.xuepeng.entity.Fee;
 import cc.xuepeng.service.business.FeeService;

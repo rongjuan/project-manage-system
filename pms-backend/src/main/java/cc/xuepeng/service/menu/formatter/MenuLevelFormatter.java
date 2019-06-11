@@ -1,4 +1,4 @@
-package cc.xuepeng.service.user.formatter;
+package cc.xuepeng.service.menu.formatter;
 
 import cc.xuepeng.entity.Menu;
 
@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author xuepeng
  */
-public interface UserMenuFormatter {
+public interface MenuLevelFormatter {
 
     /**
      * 格式化用户菜单。

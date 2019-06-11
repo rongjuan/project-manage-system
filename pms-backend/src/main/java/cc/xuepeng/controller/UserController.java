@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 用户的控制器。
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/pms/v1/users")
-public class UserController {
+public class UserController extends BaseController {
 
     /**
      * 用户登录。
@@ -47,15 +48,104 @@ public class UserController {
     }
 
     /**
-     * @return 查询用户信息。
+     * 查询用户信息。
+     *
+     * @param userQueryVO 查询条件。
+     * @param request     HttpRequest对象。
+     * @return 用户信息。
      */
-    @PostMapping("/v1/user")
-    HttpResult findUsers(@RequestBody final UserQueryVO userQueryVO, HttpServletRequest request) {
+    @PostMapping("/v1/user/list")
+    HttpResult findByConditionAndPage(@RequestBody final UserQueryVO userQueryVO, HttpServletRequest request) {
         userQueryVO.setLicenseId(request.getAttribute("license").toString());
         PageResult<User> result = userService.findByConditionAndPage(
                 BeanUtil.objToObj(userQueryVO, User.class),
                 userQueryVO.getPage());
         return DefaultHttpResultFactory.success("查询用户成功。", result);
+    }
+
+    /**
+     * 查询用户信息。
+     *
+     * @param request HttpRequest对象。
+     * @return 用户信息。
+     */
+    @GetMapping("/v1/user")
+    HttpResult findAll(HttpServletRequest request) {
+        return DefaultHttpResultFactory.success("查询用户成功。", userService.findByLicense(getLicense(request)));
+    }
+
+    /**
+     * 创建用户。
+     *
+     * @param user    用户信息。
+     * @param request HttpRequest对象。
+     * @return 是否创建成功。
+     */
+    @PostMapping("/v1/user")
+    HttpResult create(@RequestBody final User user, final HttpServletRequest request) {
+        user.setLicenseId(getLicense(request));
+        String userId = getUser(request);
+        user.setCreateUser(userId);
+        user.setModifyUser(userId);
+        if (userService.create(user)) {
+            return DefaultHttpResultFactory.success("创建用户成功。");
+        }
+        return DefaultHttpResultFactory.fail("创建用户失败");
+    }
+
+    /**
+     * 编辑用户。
+     *
+     * @param user    用户信息。
+     * @param request HttpRequest对象。
+     * @return 是否编辑成功。
+     */
+    @PutMapping("/v1/user")
+    HttpResult update(@RequestBody final User user, final HttpServletRequest request) {
+        user.setModifyUser(getUser(request));
+        if (userService.update(user)) {
+            return DefaultHttpResultFactory.success("修改用户成功。");
+        }
+        return DefaultHttpResultFactory.fail("修改用户失败");
+    }
+
+    /**
+     * 删除用户。
+     *
+     * @param id 用户主键。
+     * @return 是否删除成功。
+     */
+    @DeleteMapping("/v1/user/{id}")
+    HttpResult delete(@PathVariable final String id) {
+        if (userService.delete(id)) {
+            return DefaultHttpResultFactory.success("删除用户成功。");
+        }
+        return DefaultHttpResultFactory.fail("删除用户失败");
+    }
+
+    /**
+     * 批量删除用户。
+     *
+     * @param ids 用户主键。
+     * @return 是否删除成功。
+     */
+    @DeleteMapping("/v1/user/batch")
+    HttpResult deleteBatch(@RequestBody final List<String> ids) {
+        if (userService.deleteBatch(ids)) {
+            return DefaultHttpResultFactory.success("删除用户成功。");
+        }
+        return DefaultHttpResultFactory.fail("删除用户失败");
+    }
+
+    /**
+     * 判断用户是否存在。
+     *
+     * @param account 账号。
+     * @return 用户是否存在。
+     */
+    @GetMapping("/v1/user/{account}/existed")
+    HttpResult existed(@PathVariable final String account) {
+        return DefaultHttpResultFactory.success("查询用户是否存在。", userService.existed(account));
     }
 
     /**

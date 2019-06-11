@@ -4,6 +4,8 @@ import cc.xuepeng.entity.User;
 import cn.yesway.framework.common.entity.page.PageParam;
 import cn.yesway.framework.common.entity.page.PageResult;
 
+import java.util.List;
+
 /**
  * 用户管理服务接口。
  *
@@ -36,5 +38,62 @@ public interface UserService {
      * @return 用户信息。
      */
     PageResult<User> findByConditionAndPage(final User user, final PageParam pageParam);
+
+    /**
+     * 根据许可证查询用户信息。
+     *
+     * @param license 许可证。
+     * @return 用户信息。
+     */
+    List<User> findByLicense(final String license);
+
+    /**
+     * 根据主键查询用户。
+     *
+     * @param ids 主键。
+     * @return 用户信息。
+     */
+    List<User> findByIds(final List<String> ids);
+
+    /**
+     * 创建用户。
+     *
+     * @param user 用户信息。
+     * @return 是否创建成功。
+     */
+    boolean create(final User user);
+
+    /**
+     * 修改用户
+     *
+     * @param user 用户信息。
+     * @return 是否修改成功。
+     */
+    boolean update(final User user);
+
+    /**
+     * 删除用户。
+     *
+     * @param id 用户主键。
+     * @return 是否删除成功。
+     */
+    boolean delete(final String id);
+
+    /**
+     * 删除用户。
+     *
+     * @param ids 用户主键。
+     * @return 是否删除成功。
+     */
+    boolean deleteBatch(final List<String> ids);
+
+    /**
+     * 判断账号是否存在。
+     * 存在：True，不存在：False；
+     *
+     * @param account 账号。
+     * @return 是否存在。
+     */
+    boolean existed(final String account);
 
 }

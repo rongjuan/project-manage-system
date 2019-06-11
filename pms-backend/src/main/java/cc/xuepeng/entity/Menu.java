@@ -115,7 +115,7 @@ public class Menu extends BaseEntity implements Serializable {
     /**
      * @return 获取备注。
      */
-    public Integer getRemark() {
+    public String getRemark() {
         return this.remark;
     }
 
@@ -124,7 +124,7 @@ public class Menu extends BaseEntity implements Serializable {
      *
      * @param remark 备注。
      */
-    public void setRemark(Integer remark) {
+    public void setRemark(String remark) {
         this.remark = remark;
     }
 
@@ -299,7 +299,7 @@ public class Menu extends BaseEntity implements Serializable {
     /**
      * 备注。
      */
-    private Integer remark;
+    private String remark;
     /**
      * 创建人。
      */
