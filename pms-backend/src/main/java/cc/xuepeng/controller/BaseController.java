@@ -26,7 +26,7 @@ public class BaseController {
      * @return 用户信息。
      */
     protected String getUser(final HttpServletRequest request) {
-        return request.getAttribute("license").toString();
+        return request.getAttribute("user").toString();
     }
 
 }

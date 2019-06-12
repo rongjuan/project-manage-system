@@ -7,6 +7,7 @@ import cc.xuepeng.dao.UserDao;
 import cc.xuepeng.entity.*;
 import cc.xuepeng.enums.UserStatus;
 import cc.xuepeng.exception.UserAuthenticationException;
+import cc.xuepeng.exception.UserSecretIncorrectException;
 import cc.xuepeng.service.menu.MenuService;
 import cc.xuepeng.service.menu.formatter.MenuLevelFormatter;
 import cc.xuepeng.service.role.RoleService;
@@ -14,11 +15,13 @@ import cc.xuepeng.service.user.secret.SecretGenerateStrategy;
 import cn.yesway.framework.common.entity.page.PageParam;
 import cn.yesway.framework.common.entity.page.PageResult;
 import cn.yesway.framework.common.security.md5.MD5Factory;
+import cn.yesway.framework.common.security.md5.MD5Util;
 import cn.yesway.framework.common.util.JWTUtil;
 import cn.yesway.framework.common.util.PKUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -218,11 +221,14 @@ public class UserServiceImpl implements UserService {
      * @return 菜单信息。
      */
     private List<Menu> findMenusById(final String id) {
-        // TODO 做一个null的判断
+        List<Menu> menus = new ArrayList<>();
         List<String> roleIds = findRoleIdsById(id);
-        List<String> menuIds = roleService.findMenuIdsByIds(roleIds);
-        List<Menu> menus = menuService.findByIds(menuIds);
-        return menuLevelFormatter.format(menus);
+        if (!CollectionUtils.isEmpty(roleIds)) {
+            List<String> menuIds = roleService.findMenuIdsByIds(roleIds);
+            menus = menuService.findByIds(menuIds);
+            return menuLevelFormatter.format(menus);
+        }
+        return menus;
     }
 
     /**
@@ -240,6 +246,32 @@ public class UserServiceImpl implements UserService {
                 .distinct()
                 .collect(Collectors.toList());
         return Collections.unmodifiableList(roleIds);
+    }
+
+    /**
+     * 修改密码。
+     *
+     * @param id        主键。
+     * @param oldSecret 旧密码。
+     * @param newSecret 新密码。
+     * @return 是否更新成功。
+     */
+    @Override
+    public boolean updateSecret(final String id, final String oldSecret, final String newSecret) {
+        MD5Util md5Util = MD5Factory.getInstance().getMD5();
+        // 判断旧密码是否正确。
+        UserCondition condition = new UserCondition();
+        condition.createCriteria()
+                .andIdEqualTo(id)
+                .andSecretEqualTo(md5Util.encodeSalt(oldSecret + UserConst.SALT));
+        if (userDao.countByCondition(condition) == 0) {
+            throw new UserSecretIncorrectException("旧密码不正确。");
+        }
+        // 更新密码。
+        User user = new User();
+        user.setId(id);
+        user.setSecret(md5Util.encodeSalt(newSecret + UserConst.SALT));
+        return userDao.updateByPrimaryKeySelective(user) > 0;
     }
 
     /**

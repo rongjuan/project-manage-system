@@ -3,6 +3,7 @@ package cc.xuepeng.controller;
 import cc.xuepeng.entity.User;
 import cc.xuepeng.service.user.UserService;
 import cc.xuepeng.vo.UserQueryVO;
+import cc.xuepeng.vo.UserSecretVO;
 import cn.yesway.framework.common.entity.http.DefaultHttpResultFactory;
 import cn.yesway.framework.common.entity.http.HttpResult;
 import cn.yesway.framework.common.entity.page.PageResult;
@@ -146,6 +147,18 @@ public class UserController extends BaseController {
     @GetMapping("/v1/user/{account}/existed")
     HttpResult existed(@PathVariable final String account) {
         return DefaultHttpResultFactory.success("查询用户是否存在。", userService.existed(account));
+    }
+
+    @PutMapping("/v1/user/secret")
+    HttpResult updateSecret(@RequestBody final UserSecretVO userSecretVO, final HttpServletRequest request) {
+        if (userService.updateSecret(
+                getUser(request),
+                userSecretVO.getOldSecret(),
+                userSecretVO.getNewSecret()
+        )) {
+            return DefaultHttpResultFactory.success("修改密码成功。");
+        }
+        return DefaultHttpResultFactory.fail("修改密码失败。");
     }
 
     /**

@@ -5,12 +5,15 @@ import cc.xuepeng.dao.RoleMenuRelationDao;
 import cc.xuepeng.dao.RoleUserRelationDao;
 import cc.xuepeng.entity.*;
 import cc.xuepeng.enums.RoleStatus;
-import cc.xuepeng.service.user.UserService;
+import cc.xuepeng.service.role.convert.RoleMenuRelationConvert;
+import cc.xuepeng.service.role.convert.RoleUserRelationConvert;
 import cn.yesway.framework.common.entity.page.PageParam;
 import cn.yesway.framework.common.entity.page.PageResult;
 import cn.yesway.framework.common.util.PKUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -46,14 +49,28 @@ public class RoleServiceImpl implements RoleService {
      * @return 用户信息。
      */
     @Override
-    public List<User> findUsersById(final String id) {
-        RoleUserRelationCondition roleUserRelationCondition = new RoleUserRelationCondition();
-        roleUserRelationCondition.createCriteria().andRoleIdEqualTo(id);
-        List<RoleUserRelation> roleUserRelations = roleUserRelationDao.selectByCondition(roleUserRelationCondition);
+    public List<String> findUsersIdsById(final String id) {
+        RoleUserRelationCondition condition = new RoleUserRelationCondition();
+        condition.createCriteria().andRoleIdEqualTo(id);
+        List<RoleUserRelation> roleUserRelations = roleUserRelationDao.selectByCondition(condition);
         List<String> userIds = roleUserRelations.stream()
                 .map(RoleUserRelation::getUserId)
                 .collect(Collectors.toList());
-        return userService.findByIds(userIds);
+        return Collections.unmodifiableList(userIds);
+    }
+
+    /**
+     * 根据主键查询该角色用户的菜单的主键。
+     *
+     * @param id 角色主键。
+     * @return 菜单信息。
+     */
+    @Override
+    public List<String> findMenuIdsById(final String id) {
+        RoleMenuRelationCondition condition = new RoleMenuRelationCondition();
+        condition.createCriteria().andRoleIdEqualTo(id);
+        List<RoleMenuRelation> roleMenuRelations = roleMenuRelationDao.selectByCondition(condition);
+        return getMenuIds(roleMenuRelations);
     }
 
     /**
@@ -67,6 +84,10 @@ public class RoleServiceImpl implements RoleService {
         RoleMenuRelationCondition condition = new RoleMenuRelationCondition();
         condition.createCriteria().andRoleIdIn(ids);
         List<RoleMenuRelation> roleMenuRelations = roleMenuRelationDao.selectByCondition(condition);
+        return getMenuIds(roleMenuRelations);
+    }
+
+    private List<String> getMenuIds(final List<RoleMenuRelation> roleMenuRelations) {
         List<String> menuIds = roleMenuRelations.stream()
                 .map(RoleMenuRelation::getMenuId)
                 .distinct()
@@ -129,6 +150,44 @@ public class RoleServiceImpl implements RoleService {
     }
 
     /**
+     * 保存角色与用户的关系。
+     *
+     * @param role 角色信息。
+     */
+    @Override
+    @Transactional
+    public void saveRoleUser(final Role role) {
+        // 删除角色与用户的关系。
+        RoleUserRelationCondition condition = new RoleUserRelationCondition();
+        condition.createCriteria().andRoleIdEqualTo(role.getId());
+        roleUserRelationDao.deleteByCondition(condition);
+        // 保存用户与角色的关系。
+        List<RoleUserRelation> roleUserRelations = roleUserRelationConvert.convert(role);
+        if (!CollectionUtils.isEmpty(roleUserRelations)) {
+            roleUserRelationDao.insertBatchSelective(roleUserRelations);
+        }
+    }
+
+    /**
+     * 保存角色与菜单的关系。
+     *
+     * @param role 角色信息。
+     */
+    @Override
+    @Transactional
+    public void saveRoleMenu(final Role role) {
+        // 删除角色与菜单的关系。
+        RoleMenuRelationCondition condition = new RoleMenuRelationCondition();
+        condition.createCriteria().andRoleIdEqualTo(role.getId());
+        roleMenuRelationDao.deleteByCondition(condition);
+        // 保存用户与菜单的关系。
+        List<RoleMenuRelation> roleMenuRelations = roleMenuRelationConvert.convert(role);
+        if (!CollectionUtils.isEmpty(roleMenuRelations)) {
+            roleMenuRelationDao.insertBatchSelective(roleMenuRelations);
+        }
+    }
+
+    /**
      * 设置角色管理持久化接口。
      *
      * @param roleDao 角色管理持久化接口。
@@ -159,13 +218,23 @@ public class RoleServiceImpl implements RoleService {
     }
 
     /**
-     * 设置用户管理业务接口。
+     * 设置用户角色关系转换接口。
      *
-     * @param userService 用户管理业务接口。
+     * @param roleUserRelationConvert 用户角色关系转换接口。
      */
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setRoleUserRelationConvert(RoleUserRelationConvert roleUserRelationConvert) {
+        this.roleUserRelationConvert = roleUserRelationConvert;
+    }
+
+    /**
+     * 设置用户菜单关系转换接口。
+     *
+     * @param roleMenuRelationConvert 用户菜单关系转换接口。
+     */
+    @Autowired
+    public void setRoleMenuRelationConvert(RoleMenuRelationConvert roleMenuRelationConvert) {
+        this.roleMenuRelationConvert = roleMenuRelationConvert;
     }
 
     /**
@@ -181,8 +250,12 @@ public class RoleServiceImpl implements RoleService {
      */
     private RoleUserRelationDao roleUserRelationDao;
     /**
-     * 用户管理服务接口。
+     * 用户角色关系转换接口。
      */
-    private UserService userService;
+    private RoleUserRelationConvert roleUserRelationConvert;
+    /**
+     * 用户菜单关系转换接口。
+     */
+    private RoleMenuRelationConvert roleMenuRelationConvert;
 
 }

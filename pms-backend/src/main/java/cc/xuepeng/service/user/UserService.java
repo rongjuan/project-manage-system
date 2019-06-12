@@ -96,4 +96,14 @@ public interface UserService {
      */
     boolean existed(final String account);
 
+    /**
+     * 修改密码。
+     *
+     * @param id        主键。
+     * @param oldSecret 旧密码。
+     * @param newSecret 新密码。
+     * @return 是否更新成功。
+     */
+    boolean updateSecret(final String id, final String oldSecret, final String newSecret);
+
 }

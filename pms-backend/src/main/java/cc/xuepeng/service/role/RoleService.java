@@ -1,7 +1,6 @@
 package cc.xuepeng.service.role;
 
 import cc.xuepeng.entity.Role;
-import cc.xuepeng.entity.User;
 import cn.yesway.framework.common.entity.page.PageParam;
 import cn.yesway.framework.common.entity.page.PageResult;
 
@@ -27,7 +26,15 @@ public interface RoleService {
      * @param id 角色主键。
      * @return 用户信息。
      */
-    List<User> findUsersById(final String id);
+    List<String> findUsersIdsById(final String id);
+
+    /**
+     * 根据主键查询该角色用户的菜单的主键。
+     *
+     * @param id 角色主键。
+     * @return 菜单信息。
+     */
+    List<String> findMenuIdsById(final String id);
 
     /**
      * 根据主键查询该角色用户的菜单的主键。
@@ -68,5 +75,20 @@ public interface RoleService {
      * @return 是否删除成功。
      */
     boolean deleteBatch(final List<String> ids);
+
+    /**
+     * 保存角色与用户的关系。
+     *
+     * @param role 角色信息。
+     */
+    void saveRoleUser(final Role role);
+
+    /**
+     * 保存角色与菜单的关系。
+     *
+     * @param role 角色信息。
+     */
+    void saveRoleMenu(final Role role);
+
 
 }

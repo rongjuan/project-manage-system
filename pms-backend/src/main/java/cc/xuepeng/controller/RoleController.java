@@ -40,14 +40,25 @@ public class RoleController extends BaseController {
     }
 
     /**
-     * 根据主键查询该角色下的用户。
+     * 根据主键查询该角色下的用户主键。
      *
      * @param id 角色主键。
-     * @return 用户信息。
+     * @return 用户主键。
      */
     @GetMapping("/v1/role/{id}/user")
-    HttpResult findUsersById(@PathVariable final String id) {
-        return DefaultHttpResultFactory.success("查询角色下的用户成功。", roleService.findUsersById(id));
+    HttpResult findUserIdsById(@PathVariable final String id) {
+        return DefaultHttpResultFactory.success("查询角色下的用户成功。", roleService.findUsersIdsById(id));
+    }
+
+    /**
+     * 根据主键查询该角色下的菜单主键。
+     *
+     * @param id 角色主键。
+     * @return 菜单主键。
+     */
+    @GetMapping("/v1/role/{id}/menu")
+    HttpResult findMenuIdsById(@PathVariable final String id) {
+        return DefaultHttpResultFactory.success("查询角色下的菜单成功。", roleService.findMenuIdsById(id));
     }
 
     /**
@@ -111,6 +122,30 @@ public class RoleController extends BaseController {
             return DefaultHttpResultFactory.success("删除角色成功。");
         }
         return DefaultHttpResultFactory.fail("删除角色失败");
+    }
+
+    /**
+     * 设置角色与人员的关系。
+     *
+     * @param role 角色信息。
+     * @return 是否设置成功。
+     */
+    @PutMapping("/v1/role/user")
+    HttpResult saveRoleUser(@RequestBody final Role role) {
+        roleService.saveRoleUser(role);
+        return DefaultHttpResultFactory.success("设置角色与人员的关系成功。");
+    }
+
+    /**
+     * 设置角色与菜单的关系。
+     *
+     * @param role 角色信息。
+     * @return 是否设置成功。
+     */
+    @PutMapping("/v1/role/menu")
+    HttpResult saveRoleMenu(@RequestBody final Role role) {
+        roleService.saveRoleMenu(role);
+        return DefaultHttpResultFactory.success("设置角色与菜单的关系成功。");
     }
 
     /**

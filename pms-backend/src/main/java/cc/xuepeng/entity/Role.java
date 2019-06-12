@@ -3,6 +3,8 @@ package cc.xuepeng.entity;
 import cn.yesway.framework.common.entity.base.BaseEntity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Role的实体类。
@@ -29,6 +31,7 @@ public class Role extends BaseEntity implements Serializable {
     public void setLicenseId(String licenseId) {
         this.licenseId = licenseId;
     }
+
     /**
      * @return 获取名称。
      */
@@ -44,6 +47,7 @@ public class Role extends BaseEntity implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
     /**
      * @return 获取状态：0=停用；1=启用；。
      */
@@ -59,6 +63,7 @@ public class Role extends BaseEntity implements Serializable {
     public void setStatus(Byte status) {
         this.status = status;
     }
+
     /**
      * @return 获取是否删除。
      */
@@ -74,6 +79,7 @@ public class Role extends BaseEntity implements Serializable {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
+
     /**
      * @return 获取备注。
      */
@@ -89,6 +95,7 @@ public class Role extends BaseEntity implements Serializable {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
     /**
      * @return 获取创建人。
      */
@@ -104,6 +111,7 @@ public class Role extends BaseEntity implements Serializable {
     public void setCreateUser(String createUser) {
         this.createUser = createUser;
     }
+
     /**
      * @return 获取修改人。
      */
@@ -119,6 +127,7 @@ public class Role extends BaseEntity implements Serializable {
     public void setModifyUser(String modifyUser) {
         this.modifyUser = modifyUser;
     }
+
     /**
      * @return 获取创建时间。
      */
@@ -134,6 +143,7 @@ public class Role extends BaseEntity implements Serializable {
     public void setCreateTime(java.util.Date createTime) {
         this.createTime = (createTime == null ? null : (java.util.Date) createTime.clone());
     }
+
     /**
      * @return 获取修改时间。
      */
@@ -181,6 +191,7 @@ public class Role extends BaseEntity implements Serializable {
     public void setCreateTimeEnd(java.util.Date createTimeEnd) {
         this.createTimeEnd = (createTimeEnd == null ? null : (java.util.Date) createTimeEnd.clone());
     }
+
     /**
      * @return 获取修改时间开始时间。
      */
@@ -211,6 +222,38 @@ public class Role extends BaseEntity implements Serializable {
      */
     public void setModifyTimeEnd(java.util.Date modifyTimeEnd) {
         this.modifyTimeEnd = (modifyTimeEnd == null ? null : (java.util.Date) modifyTimeEnd.clone());
+    }
+
+    /**
+     * @return 获取用户信息。
+     */
+    public List<User> getUsers() {
+        return users;
+    }
+
+    /**
+     * 设置用户信息。
+     *
+     * @param users 用户信息。
+     */
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    /**
+     * @return 获取菜单信息。
+     */
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    /**
+     * 设置菜单信息。
+     *
+     * @param menus 菜单信息。
+     */
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
     }
 
     /**
@@ -265,5 +308,13 @@ public class Role extends BaseEntity implements Serializable {
      * 修改时间结束时间。
      */
     private java.util.Date modifyTimeEnd;
+    /**
+     * 用户信息。
+     */
+    private List<User> users = new ArrayList<>();
+    /**
+     * 菜单信息。
+     */
+    private List<Menu> menus = new ArrayList<>();
 
 }
