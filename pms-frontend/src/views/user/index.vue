@@ -34,7 +34,7 @@
       <el-table-column align="left" label="邮箱" width="200" prop="email" />
       <el-table-column align="center" label="头像" width="95" prop="photo">
         <template slot-scope="scope">
-          <el-image :src="scope.row.photo" style="width: 40px; height: 40px" />clear
+          <el-image :src="scope.row.photo" style="width: 40px; height: 40px" />
         </template>
       </el-table-column>
       <el-table-column align="left" label="备注" prop="remark" />
