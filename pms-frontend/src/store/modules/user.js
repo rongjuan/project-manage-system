@@ -1,93 +1,89 @@
-import { login, logout, find } from '@/api/user'
+import { login, getUser } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import { resetRouter } from '@/router'
 
-const user = {
-  state: {
-    token: getToken(),
-    name: '',
-    avatar: '',
-    roles: []
+// 初始化
+const state = {
+  token: getToken(),
+  id: '',
+  name: '',
+  avatar: '',
+  menus: []
+}
+
+// 同步（修改）
+const mutations = {
+  SET_TOKEN: (state, token) => {
+    state.token = token
   },
-
-  mutations: {
-    SET_TOKEN: (state, token) => {
-      state.token = token
-    },
-    SET_NAME: (state, name) => {
-      state.name = name
-    },
-    SET_AVATAR: (state, avatar) => {
-      state.avatar = avatar
-    },
-    SET_ROLES: (state, roles) => {
-      state.roles = roles
-    }
+  SET_ID: (state, id) => {
+    state.id = id
   },
-
-  actions: {
-    // 登录
-    Login({ commit }, userInfo) {
-      const account = userInfo.account.trim()
-      return new Promise((resolve, reject) => {
-        login(account, userInfo.password).then(response => {
-          const user = response.data
-          setToken(user.id)
-          commit('SET_TOKEN', user.id)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
-    },
-
-    // 获取用户信息
-    GetInfo({ commit, state }) {
-      return new Promise((resolve, reject) => {
-        find(state.token).then(response => {
-          const data = response.data
-          // if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-          //   commit('SET_ROLES', data.roles)
-          // } else {
-          //   reject('getInfo: roles must be a non-null array !')
-          // }
-          // commit('SET_NAME', data.name)
-          // commit('SET_AVATAR', data.avatar)
-          commit('SET_ROLES', [])
-          commit('SET_NAME', data.name)
-          commit('SET_AVATAR', '')
-          resolve(response)
-        }).catch(error => {
-          reject(error)
-        })
-      })
-    },
-
-    // 登出
-    LogOut({ commit, state }) {
-      commit('SET_TOKEN', '')
-      commit('SET_ROLES', [])
-      removeToken()
-      // return new Promise((resolve, reject) => {
-      //   logout(state.token).then(() => {
-      //     commit('SET_TOKEN', '')
-      //     commit('SET_ROLES', [])
-      //     removeToken()
-      //     resolve()
-      //   }).catch(error => {
-      //     reject(error)
-      //   })
-      // })
-    },
-
-    // 前端 登出
-    FedLogOut({ commit }) {
-      return new Promise(resolve => {
-        commit('SET_TOKEN', '')
-        removeToken()
-        resolve()
-      })
-    }
+  SET_NAME: (state, name) => {
+    state.name = name
+  },
+  SET_AVATAR: (state, avatar) => {
+    state.avatar = avatar
+  },
+  SET_MENUS: (state, menus) => {
+    state.menus = menus
   }
 }
 
-export default user
+// 异步（修改）
+const actions = {
+  login({ commit }, userInfo) {
+    const { account, secret } = userInfo
+    return new Promise((resolve, reject) => {
+      login({ account: account.trim(), secret: secret }).then(response => {
+        const { data } = response
+        commit('SET_TOKEN', data)
+        setToken(data)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getInfo({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      getUser(state.token).then(response => {
+        const { data } = response
+        if (!data) {
+          reject('Verification failed, please Login again.')
+        }
+        const { id, name, photo, menus } = data
+        commit('SET_ID', id)
+        commit('SET_NAME', name)
+        commit('SET_AVATAR', photo)
+        commit('SET_MENUS', menus)
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  logout({ commit }) {
+    commit('SET_TOKEN', '')
+    commit('SET_ID', '')
+    removeToken()
+    resetRouter()
+  },
+  resetToken({ commit }) {
+    return new Promise(resolve => {
+      commit('SET_TOKEN', '')
+      commit('SET_ID', '')
+      removeToken()
+      resolve()
+    })
+  }
+}
+
+// 导出
+export default {
+  namespaced: true,
+  state,
+  mutations,
+  actions
+}
+
