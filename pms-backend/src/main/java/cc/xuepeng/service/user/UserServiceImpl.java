@@ -21,6 +21,7 @@ import cn.yesway.framework.common.util.PKUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -168,7 +169,13 @@ public class UserServiceImpl implements UserService {
      * @return 是否删除成功。
      */
     @Override
+    @Transactional
     public boolean delete(final String id) {
+        // 删除用户与角色的关系。
+        RoleUserRelationCondition condition = new RoleUserRelationCondition();
+        condition.createCriteria().andUserIdEqualTo(id);
+        roleUserRelationDao.deleteByCondition(condition);
+        // 删除用户。
         User user = new User();
         user.setId(id);
         user.setDeleted(Boolean.TRUE);
@@ -183,6 +190,11 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean deleteBatch(final List<String> ids) {
+        // 删除用户与角色的关系。
+        RoleUserRelationCondition roleUserRelationCondition = new RoleUserRelationCondition();
+        roleUserRelationCondition.createCriteria().andUserIdIn(ids);
+        roleUserRelationDao.deleteByCondition(roleUserRelationCondition);
+        // 删除用户。
         User user = new User();
         user.setDeleted(Boolean.TRUE);
         UserCondition condition = new UserCondition();

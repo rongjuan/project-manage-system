@@ -1,13 +1,16 @@
 package cc.xuepeng.service.menu;
 
 import cc.xuepeng.dao.MenuDao;
+import cc.xuepeng.dao.RoleMenuRelationDao;
 import cc.xuepeng.entity.Menu;
 import cc.xuepeng.entity.MenuCondition;
+import cc.xuepeng.entity.RoleMenuRelationCondition;
 import cc.xuepeng.exception.CannotDeleteMenuException;
 import cc.xuepeng.service.menu.formatter.MenuLevelFormatter;
 import cn.yesway.framework.common.util.PKUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -91,10 +94,17 @@ public class MenuServiceImpl implements MenuService {
      * @return 是否删除成功。
      */
     @Override
+    @Transactional
     public boolean delete(final String id) {
+        // 是否允许删除菜单
         if (hasChildren(id)) {
             throw new CannotDeleteMenuException("该菜单下存在子菜单，不能删除。");
         }
+        // 删除菜单与角色的关系
+        RoleMenuRelationCondition condition = new RoleMenuRelationCondition();
+        condition.createCriteria().andMenuIdEqualTo(id);
+        roleMenuRelationDao.deleteByCondition(condition);
+        // 删除菜单
         Menu menu = new Menu();
         menu.setId(id);
         menu.setDeleted(Boolean.TRUE);
@@ -126,6 +136,16 @@ public class MenuServiceImpl implements MenuService {
     }
 
     /**
+     * 设置角色菜单关系持久化接口。
+     *
+     * @param roleMenuRelationDao 角色菜单关系持久化接口。
+     */
+    @Autowired
+    public void setRoleMenuRelationDao(RoleMenuRelationDao roleMenuRelationDao) {
+        this.roleMenuRelationDao = roleMenuRelationDao;
+    }
+
+    /**
      * 设置菜单层级格式化接口。
      *
      * @param menuLevelFormatter 菜单层级格式化接口。
@@ -139,6 +159,10 @@ public class MenuServiceImpl implements MenuService {
      * 菜单持久化接口。
      */
     private MenuDao menuDao;
+    /**
+     * 角色菜单关系持久化接口。
+     */
+    private RoleMenuRelationDao roleMenuRelationDao;
     /**
      * 菜单层级格式化接口。
      */
