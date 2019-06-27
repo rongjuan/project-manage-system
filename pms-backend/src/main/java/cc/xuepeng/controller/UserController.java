@@ -31,7 +31,7 @@ public class UserController extends BaseController {
      * @return 登录成功后返回用户信息。
      */
     @PostMapping("/v1/user/login")
-    HttpResult login(@RequestBody final User user) {
+    public HttpResult login(@RequestBody final User user) {
         final String token = userService.login(user.getAccount(), user.getSecret());
         return DefaultHttpResultFactory.success("登录成功", token);
     }
@@ -43,7 +43,7 @@ public class UserController extends BaseController {
      * @return 用户信息。
      */
     @GetMapping("/v1/user/info")
-    HttpResult findByToken(@RequestHeader HttpHeaders headers) {
+    public HttpResult findByToken(@RequestHeader HttpHeaders headers) {
         final User result = userService.findUserByToken(headers.getFirst("X-Access-Token"));
         return DefaultHttpResultFactory.success("根据主键查询用户成功。", result);
     }
@@ -56,7 +56,7 @@ public class UserController extends BaseController {
      * @return 用户信息。
      */
     @PostMapping("/v1/user/list")
-    HttpResult findByConditionAndPage(@RequestBody final UserQueryVO userQueryVO, HttpServletRequest request) {
+    public HttpResult findByConditionAndPage(@RequestBody final UserQueryVO userQueryVO, HttpServletRequest request) {
         userQueryVO.setLicenseId(request.getAttribute("license").toString());
         PageResult<User> result = userService.findByConditionAndPage(
                 BeanUtil.objToObj(userQueryVO, User.class),
@@ -71,7 +71,7 @@ public class UserController extends BaseController {
      * @return 用户信息。
      */
     @GetMapping("/v1/user")
-    HttpResult findAll(HttpServletRequest request) {
+    public HttpResult findAll(HttpServletRequest request) {
         return DefaultHttpResultFactory.success("查询用户成功。", userService.findByLicense(getLicense(request)));
     }
 
@@ -83,7 +83,7 @@ public class UserController extends BaseController {
      * @return 是否创建成功。
      */
     @PostMapping("/v1/user")
-    HttpResult create(@RequestBody final User user, final HttpServletRequest request) {
+    public HttpResult create(@RequestBody final User user, final HttpServletRequest request) {
         user.setLicenseId(getLicense(request));
         String userId = getUser(request);
         user.setCreateUser(userId);
@@ -102,7 +102,7 @@ public class UserController extends BaseController {
      * @return 是否编辑成功。
      */
     @PutMapping("/v1/user")
-    HttpResult update(@RequestBody final User user, final HttpServletRequest request) {
+    public HttpResult update(@RequestBody final User user, final HttpServletRequest request) {
         user.setModifyUser(getUser(request));
         if (userService.update(user)) {
             return DefaultHttpResultFactory.success("修改用户成功。");
@@ -117,7 +117,7 @@ public class UserController extends BaseController {
      * @return 是否删除成功。
      */
     @DeleteMapping("/v1/user/{id}")
-    HttpResult delete(@PathVariable final String id) {
+    public HttpResult delete(@PathVariable final String id) {
         if (userService.delete(id)) {
             return DefaultHttpResultFactory.success("删除用户成功。");
         }
@@ -131,7 +131,7 @@ public class UserController extends BaseController {
      * @return 是否删除成功。
      */
     @DeleteMapping("/v1/user/batch")
-    HttpResult deleteBatch(@RequestBody final List<String> ids) {
+    public HttpResult deleteBatch(@RequestBody final List<String> ids) {
         if (userService.deleteBatch(ids)) {
             return DefaultHttpResultFactory.success("删除用户成功。");
         }
@@ -145,12 +145,12 @@ public class UserController extends BaseController {
      * @return 用户是否存在。
      */
     @GetMapping("/v1/user/{account}/existed")
-    HttpResult existed(@PathVariable final String account) {
+    public HttpResult existed(@PathVariable final String account) {
         return DefaultHttpResultFactory.success("查询用户是否存在。", userService.existed(account));
     }
 
     @PutMapping("/v1/user/secret")
-    HttpResult updateSecret(@RequestBody final UserSecretVO userSecretVO, final HttpServletRequest request) {
+    public HttpResult updateSecret(@RequestBody final UserSecretVO userSecretVO, final HttpServletRequest request) {
         if (userService.updateSecret(
                 getUser(request),
                 userSecretVO.getOldSecret(),

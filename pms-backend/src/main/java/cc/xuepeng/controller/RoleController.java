@@ -30,7 +30,7 @@ public class RoleController extends BaseController {
      * @return 角色信息。
      */
     @PostMapping("/v1/role/list")
-    HttpResult findByPage(@RequestBody final RoleQueryVO roleQueryVO, HttpServletRequest request) {
+    public HttpResult findByPage(@RequestBody final RoleQueryVO roleQueryVO, HttpServletRequest request) {
         roleQueryVO.setLicenseId(getLicense(request));
         PageResult<Role> result = roleService.findByConditionAndPage(
                 BeanUtil.objToObj(roleQueryVO, Role.class),
@@ -46,7 +46,7 @@ public class RoleController extends BaseController {
      * @return 用户主键。
      */
     @GetMapping("/v1/role/{id}/user")
-    HttpResult findUserIdsById(@PathVariable final String id) {
+    public HttpResult findUserIdsById(@PathVariable final String id) {
         return DefaultHttpResultFactory.success("查询角色下的用户成功。", roleService.findUsersIdsById(id));
     }
 
@@ -57,7 +57,7 @@ public class RoleController extends BaseController {
      * @return 菜单主键。
      */
     @GetMapping("/v1/role/{id}/menu")
-    HttpResult findMenuIdsById(@PathVariable final String id) {
+    public HttpResult findMenuIdsById(@PathVariable final String id) {
         return DefaultHttpResultFactory.success("查询角色下的菜单成功。", roleService.findMenuIdsById(id));
     }
 
@@ -69,7 +69,7 @@ public class RoleController extends BaseController {
      * @return 是否创建成功。
      */
     @PostMapping("/v1/role")
-    HttpResult create(@RequestBody final Role role, final HttpServletRequest request) {
+    public HttpResult create(@RequestBody final Role role, final HttpServletRequest request) {
         role.setLicenseId(getLicense(request));
         String userId = getUser(request);
         role.setCreateUser(userId);
@@ -88,7 +88,7 @@ public class RoleController extends BaseController {
      * @return 是否修改成功。
      */
     @PutMapping("/v1/role")
-    HttpResult update(@RequestBody final Role role, final HttpServletRequest request) {
+    public HttpResult update(@RequestBody final Role role, final HttpServletRequest request) {
         role.setModifyUser(getUser(request));
         if (roleService.update(role)) {
             return DefaultHttpResultFactory.success("修改角色成功。");
@@ -103,7 +103,7 @@ public class RoleController extends BaseController {
      * @return 是否删除成功。
      */
     @DeleteMapping("/v1/role/{id}")
-    HttpResult delete(@PathVariable final String id) {
+    public HttpResult delete(@PathVariable final String id) {
         if (roleService.delete(id)) {
             return DefaultHttpResultFactory.success("删除角色成功。");
         }
@@ -117,7 +117,7 @@ public class RoleController extends BaseController {
      * @return 是否删除成功。
      */
     @DeleteMapping("/v1/role/batch")
-    HttpResult deleteBatch(@RequestBody final List<String> ids) {
+    public HttpResult deleteBatch(@RequestBody final List<String> ids) {
         if (roleService.deleteBatch(ids)) {
             return DefaultHttpResultFactory.success("删除角色成功。");
         }
@@ -131,7 +131,7 @@ public class RoleController extends BaseController {
      * @return 是否设置成功。
      */
     @PutMapping("/v1/role/user")
-    HttpResult saveRoleUser(@RequestBody final Role role) {
+    public HttpResult saveRoleUser(@RequestBody final Role role) {
         roleService.saveRoleUser(role);
         return DefaultHttpResultFactory.success("设置角色与人员的关系成功。");
     }
@@ -143,7 +143,7 @@ public class RoleController extends BaseController {
      * @return 是否设置成功。
      */
     @PutMapping("/v1/role/menu")
-    HttpResult saveRoleMenu(@RequestBody final Role role) {
+    public HttpResult saveRoleMenu(@RequestBody final Role role) {
         roleService.saveRoleMenu(role);
         return DefaultHttpResultFactory.success("设置角色与菜单的关系成功。");
     }

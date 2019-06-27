@@ -22,7 +22,7 @@ public class MenuController extends BaseController {
      * @return 查询全部菜单。
      */
     @GetMapping("/v1/menu")
-    HttpResult findAll() {
+    public HttpResult findAll() {
         return DefaultHttpResultFactory.success("查询菜单成功。", menuService.findAll());
     }
 
@@ -33,7 +33,7 @@ public class MenuController extends BaseController {
      * @return 菜单信息。
      */
     @GetMapping("/v1/menu/{id}")
-    HttpResult findById(@PathVariable final String id) {
+    public HttpResult findById(@PathVariable final String id) {
         return DefaultHttpResultFactory.success("查询菜单成功。", menuService.findById(id));
     }
 
@@ -45,7 +45,7 @@ public class MenuController extends BaseController {
      * @return 是否创建成功。
      */
     @PostMapping("/v1/menu")
-    HttpResult create(@RequestBody final Menu menu, final HttpServletRequest request) {
+    public HttpResult create(@RequestBody final Menu menu, final HttpServletRequest request) {
         menu.setCreateUser(getUser(request));
         if (menuService.create(menu)) {
             return DefaultHttpResultFactory.success("创建菜单成功。");
@@ -61,7 +61,7 @@ public class MenuController extends BaseController {
      * @return 是否修改成功。
      */
     @PutMapping("/v1/menu")
-    HttpResult update(@RequestBody final Menu menu, final HttpServletRequest request) {
+    public HttpResult update(@RequestBody final Menu menu, final HttpServletRequest request) {
         menu.setModifyUser(getUser(request));
         if (menuService.update(menu)) {
             return DefaultHttpResultFactory.success("修改菜单成功。");
@@ -76,7 +76,7 @@ public class MenuController extends BaseController {
      * @return 是否删除成功。
      */
     @DeleteMapping("/v1/menu/{id}")
-    HttpResult delete(@PathVariable final String id) {
+    public HttpResult delete(@PathVariable final String id) {
         if (menuService.delete(id)) {
             return DefaultHttpResultFactory.success("删除菜单成功。");
         }
