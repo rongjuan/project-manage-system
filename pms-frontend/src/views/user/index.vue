@@ -7,7 +7,7 @@
       <el-input v-model="userQuery.phone" placeholder="电话" style="width: 200px;" class="filter-item" />
       <el-input v-model="userQuery.email" placeholder="邮箱" style="width: 255px;" class="filter-item" />
       <el-button class="filter-item" type="primary" icon="el-icon-search" style="margin-left: 10px;" @click="query">查询</el-button>
-      <el-button class="filter-item" type="primary" icon="el-icon-refresh" @click="reset">重置</el-button>
+      <el-button class="filter-item" type="primary" icon="el-icon-refresh">重置</el-button>
     </div>
     <br>
     <!-- 列表区 -->
@@ -97,7 +97,7 @@
 import { getUserList, createUser, updateUser, deleteUser, deleteBatchUser, existUser } from '@/api/user'
 
 export default {
-  data() {
+  data () {
     const accountIsExist = (rule, value, callback) => {
       if (!this.user.id) {
         existUser(value).then(response => {
@@ -166,11 +166,11 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     this.getUserList()
   },
   methods: {
-    getUserList() {
+    getUserList () {
       this.listLoading = true
       getUserList(this.userQuery).then(response => {
         const { data } = response
@@ -181,22 +181,22 @@ export default {
         this.listLoading = false
       })
     },
-    query() {
+    query () {
       this.userQuery.page.pageNum = 1
       this.getUserList()
     },
-    handleSizeChange(pageSize) {
+    handleSizeChange (pageSize) {
       this.userQuery.page.pageSize = pageSize
       this.getUserList()
     },
-    handleCurrentChange(pageNum) {
+    handleCurrentChange (pageNum) {
       this.userQuery.page.pageNum = pageNum
       this.getUserList()
     },
-    handleSelectionChange(val) {
+    handleSelectionChange (val) {
       this.userSelection = val
     },
-    openForm(row) {
+    openForm (row) {
       this.dialogFormVisible = true
       if (this.$refs['userForm'] !== undefined) {
         this.$refs['userForm'].resetFields()
@@ -211,7 +211,7 @@ export default {
         }
       }
     },
-    save() {
+    save () {
       this.$refs['userForm'].validate((valid) => {
         if (!valid) return
         const user = Object.assign({}, this.user)
@@ -222,7 +222,7 @@ export default {
         }
       })
     },
-    createUser(user) {
+    createUser (user) {
       this.saveLoading = true
       createUser(user).then((response) => {
         this.dialogFormVisible = false
@@ -232,7 +232,7 @@ export default {
         this.saveLoading = false
       })
     },
-    updateUser(user) {
+    updateUser (user) {
       this.saveLoading = true
       updateUser(user).then((response) => {
         this.dialogFormVisible = false
@@ -242,7 +242,7 @@ export default {
         this.saveLoading = false
       })
     },
-    remove(id) {
+    remove (id) {
       this.$confirm('是否确认要删除该用户?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -254,7 +254,7 @@ export default {
         })
       })
     },
-    removeBatch() {
+    removeBatch () {
       if (!this.userSelection.length) {
         this.$message({ type: 'info', message: '请选择要删除的用户。' })
         return

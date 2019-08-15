@@ -32,7 +32,7 @@ const mutations = {
 
 // 异步（修改）
 const actions = {
-  login({ commit }, userInfo) {
+  login ({ commit }, userInfo) {
     const { account, secret } = userInfo
     return new Promise((resolve, reject) => {
       login({ account: account.trim(), secret: secret }).then(response => {
@@ -45,7 +45,7 @@ const actions = {
       })
     })
   },
-  getInfo({ commit, state }) {
+  getInfo ({ commit, state }) {
     return new Promise((resolve, reject) => {
       getUser(state.token).then(response => {
         const { data } = response
@@ -63,13 +63,13 @@ const actions = {
       })
     })
   },
-  logout({ commit }) {
+  logout ({ commit }) {
     commit('SET_TOKEN', '')
     commit('SET_ID', '')
     removeToken()
     resetRouter()
   },
-  resetToken({ commit }) {
+  resetToken ({ commit }) {
     return new Promise(resolve => {
       commit('SET_TOKEN', '')
       commit('SET_ID', '')

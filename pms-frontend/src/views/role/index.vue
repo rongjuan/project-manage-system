@@ -112,7 +112,7 @@ import { getAllUser } from '@/api/user'
 import { parseObj } from '@/utils/index'
 
 export default {
-  data() {
+  data () {
     return {
       listLoading: true,
       dialogFormVisible: false,
@@ -164,11 +164,11 @@ export default {
       menuSelector: []
     }
   },
-  created() {
+  created () {
     this.getRoleList()
   },
   methods: {
-    getRoleList() {
+    getRoleList () {
       this.listLoading = true
       getRoleList(this.roleQuery).then(response => {
         const { data } = response
@@ -179,18 +179,18 @@ export default {
         this.listLoading = false
       })
     },
-    handleSizeChange(pageSize) {
+    handleSizeChange (pageSize) {
       this.roleQuery.page.pageSize = pageSize
       this.getRoleList()
     },
-    handleCurrentChange(pageNum) {
+    handleCurrentChange (pageNum) {
       this.roleQuery.page.pageNum = pageNum
       this.getRoleList()
     },
-    handleSelectionChange(val) {
+    handleSelectionChange (val) {
       this.roleSelection = val
     },
-    openForm(row) {
+    openForm (row) {
       this.dialogFormVisible = true
       if (this.$refs['roleForm'] !== undefined) {
         this.$refs['roleForm'].resetFields()
@@ -200,7 +200,7 @@ export default {
         parseObj(this.form, row, this.role)
       }
     },
-    save() {
+    save () {
       this.$refs['roleForm'].validate((valid) => {
         if (!valid) return
         const role = Object.assign({}, this.role)
@@ -211,7 +211,7 @@ export default {
         }
       })
     },
-    createRole(role) {
+    createRole (role) {
       this.saveLoading = true
       createRole(role).then(response => {
         this.dialogFormVisible = false
@@ -221,7 +221,7 @@ export default {
         this.saveLoading = false
       })
     },
-    updateRole(role) {
+    updateRole (role) {
       this.saveLoading = true
       updateRole(role).then(response => {
         this.dialogFormVisible = false
@@ -231,7 +231,7 @@ export default {
         this.saveLoading = false
       })
     },
-    remove(id) {
+    remove (id) {
       this.$confirm('是否确认要删除该角色?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -243,7 +243,7 @@ export default {
         })
       })
     },
-    removeBatch() {
+    removeBatch () {
       if (!this.roleSelection.length) {
         this.$message({ type: 'info', message: '请选择要删除的角色。' })
         return
@@ -259,7 +259,7 @@ export default {
         })
       })
     },
-    openUserSelector(id) {
+    openUserSelector (id) {
       this.dialogUserSelectorVisible = true
       this.roleId = id
       getAllUser().then(response => {
@@ -269,7 +269,7 @@ export default {
         this.userSelector = response.data
       })
     },
-    saveRoleUserRelation() {
+    saveRoleUserRelation () {
       this.saveLoading = true
       this.role = Object.assign({}, this.form)
       this.role.id = this.roleId
@@ -286,7 +286,7 @@ export default {
         this.saveLoading = false
       })
     },
-    openFunctionSelector(id) {
+    openFunctionSelector (id) {
       this.dialogFunctionSelectorVisible = true
       this.roleId = id
       getAllMenu().then(response => {
@@ -297,7 +297,7 @@ export default {
         this.menuSelector = response.data
       })
     },
-    saveRoleMenuRelation() {
+    saveRoleMenuRelation () {
       this.saveLoading = true
       this.role = Object.assign({}, this.form)
       this.role.id = this.roleId

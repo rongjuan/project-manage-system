@@ -54,7 +54,7 @@ export default {
     Breadcrumb,
     Hamburger
   },
-  data() {
+  data () {
     const checkPwd = (rule, value, callback) => {
       if (value !== this.user.newSecret) {
         callback(new Error('两次输入的新密码不一致'))
@@ -94,20 +94,20 @@ export default {
     ])
   },
   methods: {
-    toggleSideBar() {
+    toggleSideBar () {
       this.$store.dispatch('app/toggleSideBar')
     },
-    async logout() {
+    async logout () {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
-    openForm() {
+    openForm () {
       this.dialogFormVisible = true
       if (this.$refs['userForm'] !== undefined) {
         this.$refs['userForm'].resetFields()
       }
     },
-    save() {
+    save () {
       this.$refs['userForm'].validate((valid) => {
         if (!valid) return
         const data = Object.assign({}, this.user)

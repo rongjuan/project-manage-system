@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getRoleList(data) {
+export function getRoleList (data) {
   return request({
     url: '/pms/v1/roles/v1/role/list',
     method: 'post',
@@ -8,7 +8,7 @@ export function getRoleList(data) {
   })
 }
 
-export function createRole(data) {
+export function createRole (data) {
   return request({
     url: '/pms/v1/roles/v1/role',
     method: 'post',
@@ -16,7 +16,7 @@ export function createRole(data) {
   })
 }
 
-export function updateRole(data) {
+export function updateRole (data) {
   return request({
     url: '/pms/v1/roles/v1/role',
     method: 'put',
@@ -24,14 +24,14 @@ export function updateRole(data) {
   })
 }
 
-export function deleteRole(id) {
+export function deleteRole (id) {
   return request({
     url: '/pms/v1/roles/v1/role/' + id,
     method: 'delete'
   })
 }
 
-export function deleteBatchRole(data) {
+export function deleteBatchRole (data) {
   return request({
     url: '/pms/v1/roles/v1/role/batch',
     method: 'delete',
@@ -39,14 +39,14 @@ export function deleteBatchRole(data) {
   })
 }
 
-export function getRoleUser(id) {
+export function getRoleUser (id) {
   return request({
     url: '/pms/v1/roles/v1/role/' + id + '/user',
     method: 'get'
   })
 }
 
-export function saveRoleUser(data) {
+export function saveRoleUser (data) {
   return request({
     url: '/pms/v1/roles/v1/role/user',
     method: 'put',
@@ -54,14 +54,14 @@ export function saveRoleUser(data) {
   })
 }
 
-export function getRoleMenu(id) {
+export function getRoleMenu (id) {
   return request({
     url: '/pms/v1/roles/v1/role/' + id + '/menu',
     method: 'get'
   })
 }
 
-export function saveRoleMenu(data) {
+export function saveRoleMenu (data) {
   return request({
     url: '/pms/v1/roles/v1/role/menu',
     method: 'put',

@@ -61,7 +61,7 @@ import { getAllMenu, createMenu, updateMenu, removeMenu } from '@/api/menu'
 import { parseObj } from '@/utils/index'
 
 export default {
-  data() {
+  data () {
     return {
       title: '',
       saveLoading: false,
@@ -103,35 +103,35 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     this.menu = Object.assign({}, this.form)
     this.initTree()
   },
   methods: {
-    initTree() {
+    initTree () {
       getAllMenu().then(response => {
         this.menus = response.data
       })
     },
-    handleNodeClick(data) {
+    handleNodeClick (data) {
       this.resetFields()
       parseObj(this.form, data, this.menu)
     },
-    createBrotherNode() {
+    createBrotherNode () {
       if (this.validateCurrentNode()) {
         this.menu = Object.assign({}, this.form)
         this.menu.pid = this.$refs['menuTree'].getCurrentNode().pid
         this.title = ' -> 添加 【' + this.$refs['menuTree'].getCurrentNode().title + '】 的同级部门'
       }
     },
-    createChildNode() {
+    createChildNode () {
       if (this.validateCurrentNode()) {
         this.menu = Object.assign({}, this.form)
         this.menu.pid = this.$refs['menuTree'].getCurrentNode().id
         this.title = ' -> 添加 【' + this.$refs['menuTree'].getCurrentNode().title + '】 的子部门'
       }
     },
-    removeNode() {
+    removeNode () {
       if (this.validateCurrentNode()) {
         this.$confirm('是否确认要删除该菜单?', '提示', {
           confirmButtonText: '确定',
@@ -145,7 +145,7 @@ export default {
         })
       }
     },
-    save() {
+    save () {
       if (this.validateCurrentNode()) {
         this.$refs['menuForm'].validate((valid) => {
           if (!valid) return
@@ -158,7 +158,7 @@ export default {
         })
       }
     },
-    createMenu(menu) {
+    createMenu (menu) {
       this.saveLoading = true
       createMenu(menu).then(response => {
         this.$message({ type: 'success', message: response.msg })
@@ -169,7 +169,7 @@ export default {
         this.resetFields()
       })
     },
-    updateMenu(menu) {
+    updateMenu (menu) {
       this.saveLoading = true
       updateMenu(menu).then(response => {
         this.$message({ type: 'success', message: response.msg })
@@ -180,7 +180,7 @@ export default {
         this.resetFields()
       })
     },
-    validateCurrentNode() {
+    validateCurrentNode () {
       const currentNode = this.$refs['menuTree'].getCurrentNode()
       if (!currentNode) {
         this.$message({ type: 'info', message: '请选择一个节点' })
@@ -188,7 +188,7 @@ export default {
       }
       return true
     },
-    resetFields() {
+    resetFields () {
       if (this.$refs['menuForm'] !== undefined) {
         this.$refs['menuForm'].resetFields()
       }

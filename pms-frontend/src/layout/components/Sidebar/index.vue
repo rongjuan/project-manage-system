@@ -31,11 +31,11 @@ export default {
       'sidebar',
       'menus'
     ]),
-    routes() {
+    routes () {
       return this.$store.getters['menus']
       // return this.$router.options.routes
     },
-    activeMenu() {
+    activeMenu () {
       const route = this.$route
       const { meta, path } = route
       // if set path, the sidebar will highlight the path you set
@@ -44,13 +44,13 @@ export default {
       }
       return path
     },
-    showLogo() {
+    showLogo () {
       return this.$store.state.settings.sidebarLogo
     },
-    variables() {
+    variables () {
       return variables
     },
-    isCollapse() {
+    isCollapse () {
       return !this.sidebar.opened
     }
   }

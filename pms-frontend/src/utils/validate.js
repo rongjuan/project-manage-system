@@ -6,7 +6,7 @@
  * @param {string} path
  * @returns {Boolean}
  */
-export function isExternal(path) {
+export function isExternal (path) {
   return /^(https?:|mailto:|tel:)/.test(path)
 }
 
@@ -14,7 +14,7 @@ export function isExternal(path) {
  * @param {string} str
  * @returns {Boolean}
  */
-export function validAccount(str) {
+export function validAccount (str) {
   console.info(str)
   return str.trim().length >= 0
 }
