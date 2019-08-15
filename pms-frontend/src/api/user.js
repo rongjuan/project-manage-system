@@ -15,7 +15,7 @@ export function getUser (token) {
   })
 }
 
-export function getUserList (data) {
+export function getUserPageList (data) {
   return request({
     url: '/pms/v1/users/v1/user/list',
     method: 'post',
@@ -30,7 +30,7 @@ export function getAllUser (data) {
   })
 }
 
-export function createUser (data) {
+export function addUser (data) {
   return request({
     url: '/pms/v1/users/v1/user',
     method: 'post',

@@ -1,90 +1,130 @@
 <template>
-  <div class="app-container">
+  <div>
     <!-- 查询区 -->
-    <div class="filter-container">
-      <el-input v-model="userQuery.account" placeholder="账号" style="width: 200px;" class="filter-item" />
-      <el-input v-model="userQuery.name" placeholder="名称" style="width: 150px;" class="filter-item" />
-      <el-input v-model="userQuery.phone" placeholder="电话" style="width: 200px;" class="filter-item" />
-      <el-input v-model="userQuery.email" placeholder="邮箱" style="width: 255px;" class="filter-item" />
-      <el-button class="filter-item" type="primary" icon="el-icon-search" style="margin-left: 10px;" @click="query">查询</el-button>
-      <el-button class="filter-item" type="primary" icon="el-icon-refresh">重置</el-button>
-    </div>
-    <br>
+    <el-form :inline="true" :model="queryForm">
+      <el-form-item label="账号:">
+        <el-input v-model.trim="queryForm.account" class="query-form-input" placeholder="请输入账号" />
+      </el-form-item>
+      <el-form-item label="名称:">
+        <el-input v-model.trim="queryForm.name" class="query-form-input" placeholder="请输入名称" />
+      </el-form-item>
+      <el-form-item label="电话:">
+        <el-input v-model.trim="queryForm.phone" class="query-form-input" placeholder="请输入电话" />
+      </el-form-item>
+      <el-form-item label="邮箱:">
+        <el-input v-model.trim="queryForm.email" class="query-form-input" placeholder="请输入邮箱" />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="queryClick()">查询</el-button>
+        <el-button @click="resetClick()">重置</el-button>
+      </el-form-item>
+    </el-form>
+
     <!-- 列表区 -->
-    <div class="filter-container" style="text-align: right">
-      <el-button type="success" round icon="el-icon-circle-plus" @click="openForm()">新建</el-button>
-      <el-button type="danger" round icon="el-icon-delete-solid" @click="removeBatch()">删除</el-button>
+    <div style="text-align: right;margin-bottom: 20px;">
+      <el-button type="success" @click="editClick()">添加</el-button>
+      <el-button type="danger" :disabled="!userSelection.length" @click="deleteBatchClick()">批量删除</el-button>
     </div>
-    <br>
+
     <el-table
-      ref="userTable"
-      v-loading="listLoading"
-      :data="users"
-      element-loading-text="Loading"
+      v-loading="loading"
+      :data="dataTable"
       border
-      fit
       highlight-current-row
-      style="width: 100%;"
-      @selection-change="handleSelectionChange"
+      tooltip-effect="dark"
+      @selection-change="selectChange"
     >
-      <el-table-column align="center" type="selection" width="55" />
-      <el-table-column align="left" label="账号" width="200" prop="account" />
-      <el-table-column align="left" label="名称" width="150" prop="name" />
-      <el-table-column align="left" label="电话" width="180" prop="phone" />
-      <el-table-column align="left" label="邮箱" width="200" prop="email" />
-      <el-table-column align="center" label="头像" width="95" prop="photo">
+      <el-table-column
+        align="center"
+        type="selection"
+        width="55"
+      />
+      <el-table-column
+        align="center"
+        label="账号"
+        show-overflow-tooltip
+        prop="account"
+      />
+      <el-table-column
+        align="center"
+        label="名称"
+        show-overflow-tooltip
+        prop="name"
+      />
+      <el-table-column
+        align="center"
+        label="电话"
+        show-overflow-tooltip
+        prop="phone"
+      />
+      <el-table-column
+        align="center"
+        label="邮箱"
+        show-overflow-tooltip
+        prop="email"
+      />
+      <el-table-column
+        align="center"
+        label="头像"
+        width="100"
+        prop="photo"
+      >
         <template slot-scope="scope">
-          <el-image :src="scope.row.photo" style="width: 40px; height: 40px" />
+          <el-image :src="scope.row.photo" style="width: 40px;" />
         </template>
       </el-table-column>
-      <el-table-column align="left" label="备注" prop="remark" />
       <el-table-column
-        fixed="right"
+        align="center"
+        label="备注"
+        show-overflow-tooltip
+        prop="remark"
+      />
+      <el-table-column
+        align="center"
         label="操作"
         width="150"
       >
         <template slot-scope="scope">
-          <el-button type="primary" icon="el-icon-edit" circle @click="openForm(scope.row)" />
-          <el-button type="danger" icon="el-icon-delete" circle @click="remove(scope.row.id)" />
+          <el-button type="text" @click="editClick(scope.row)">修改</el-button>
+          <el-button type="text" @click="deleteClick(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <br>
     <!-- 分页区 -->
-    <div>
+    <div style="margin: 20px 0;">
       <el-pagination
-        :page-sizes="userQuery.page.pageSizes"
-        :page-size="userQuery.page.pageSize"
-        :current-page="userQuery.page.pageNum"
-        :total="userQuery.page.totalCount"
+        :page-sizes="[1, 10, 20, 50, 100]"
+        :page-size="page.pageSize"
+        :current-page="page.pageNum"
+        :total="totalCount"
         layout="total, sizes, prev, pager, next, jumper"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
+        @size-change="sizeChange"
+        @current-change="currentPageChange"
       />
     </div>
     <!-- 表单区 -->
-    <el-dialog title="用户信息" :visible.sync="dialogFormVisible">
-      <el-form ref="userForm" :model="user" label-width="80px" :rules="rules">
+    <el-dialog :title="title" :visible.sync="dialogFormVisible">
+      <el-form ref="userForm" :model="userForm" label-width="80px" :rules="rules">
         <el-form-item label="账号" prop="account">
-          <el-input v-model="user.account" :disabled="accountDisabled" />
+          <el-input v-model="userForm.account" :disabled="!!userForm.id" />
         </el-form-item>
         <el-form-item label="名称" prop="name">
-          <el-input v-model="user.name" />
+          <el-input v-model="userForm.name" />
         </el-form-item>
         <el-form-item label="电话" prop="phone">
-          <el-input v-model="user.phone" />
+          <el-input v-model="userForm.phone" />
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
-          <el-input v-model="user.email" />
+          <el-input v-model="userForm.email" />
         </el-form-item>
         <el-form-item label="头像" prop="photo">
-          <el-input v-model="user.photo" />
+          <el-input v-model="userForm.photo" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input v-model="user.remark" type="textarea" maxlength="200" show-word-limit />
+          <el-input v-model="userForm.remark" type="textarea" maxlength="200" show-word-limit />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :loading="saveLoading" @click="save">保存</el-button>
+          <el-button type="primary" :loading="buttonLoading" @click="submitClick">保存</el-button>
           <el-button @click="dialogFormVisible = false">取消</el-button>
         </el-form-item>
       </el-form>
@@ -94,12 +134,12 @@
 
 <script>
 
-import { getUserList, createUser, updateUser, deleteUser, deleteBatchUser, existUser } from '@/api/user'
+import { getUserPageList, addUser, updateUser, deleteUser, deleteBatchUser, existUser } from '@/api/user'
 
 export default {
   data () {
     const accountIsExist = (rule, value, callback) => {
-      if (!this.user.id) {
+      if (!this.userForm.id) {
         existUser(value).then(response => {
           if (response.data) {
             callback(new Error('账号已存在。'))
@@ -112,23 +152,21 @@ export default {
       }
     }
     return {
-      listLoading: true,
+      loading: true,
       dialogFormVisible: false,
-      saveLoading: false,
-      accountDisabled: true,
-      users: [],
-      userQuery: {
+      buttonLoading: false,
+      dataTable: [],
+      queryForm: {
         account: '',
         name: '',
         phone: '',
-        email: '',
-        page: {
-          pageSizes: [1, 10, 20, 50, 100],
-          pageSize: 10,
-          totalCount: 1,
-          pageNum: 1
-        }
+        email: ''
       },
+      page: {
+        pageSize: 10,
+        pageNum: 1
+      },
+      totalCount: 1,
       form: {
         id: '',
         account: '',
@@ -138,7 +176,8 @@ export default {
         photo: '',
         remark: ''
       },
-      user: {},
+      title: '',
+      userForm: {},
       userSelection: [],
       rules: {
         account: [
@@ -167,109 +206,112 @@ export default {
     }
   },
   created () {
-    this.getUserList()
+    this.queryClick()
   },
   methods: {
-    getUserList () {
-      this.listLoading = true
-      getUserList(this.userQuery).then(response => {
-        const { data } = response
-        this.users = data.record
-        this.userQuery.page.pageNum = data.currentPage
-        this.userQuery.page.totalCount = data.totalCount
-      }).finally(() => {
-        this.listLoading = false
-      })
-    },
-    query () {
-      this.userQuery.page.pageNum = 1
+    queryClick () {
+      this.page.pageNum = 1
       this.getUserList()
     },
-    handleSizeChange (pageSize) {
-      this.userQuery.page.pageSize = pageSize
-      this.getUserList()
+    resetClick () {
+      this.queryForm = {
+        account: '',
+        name: '',
+        phone: '',
+        email: ''
+      }
     },
-    handleCurrentChange (pageNum) {
-      this.userQuery.page.pageNum = pageNum
-      this.getUserList()
-    },
-    handleSelectionChange (val) {
-      this.userSelection = val
-    },
-    openForm (row) {
+    editClick (row) {
       this.dialogFormVisible = true
       if (this.$refs['userForm'] !== undefined) {
         this.$refs['userForm'].resetFields()
       }
-      this.user = Object.assign({}, this.form)
+      this.userForm = Object.assign({}, this.form)
       if (!row) {
-        this.accountDisabled = false
+        this.title = '添加用户信息'
       } else {
-        this.accountDisabled = true
+        this.title = '修改用户信息'
         for (const props in this.form) {
-          this.user[props] = row[props]
+          this.userForm[props] = row[props]
         }
       }
     },
-    save () {
+
+    getUserList () {
+      this.loading = true
+      const params = Object.assign({}, this.queryForm, { page: this.page })
+      getUserPageList(params).then(response => {
+        const { data } = response
+        this.dataTable = data.record
+        this.totalCount = data.totalCount === 0 ? 1 : data.totalCount
+      }).finally(() => {
+        this.loading = false
+      })
+    },
+    sizeChange (pageSize) {
+      this.page.pageSize = pageSize
+      this.getUserList()
+    },
+    currentPageChange (pageNum) {
+      this.page.pageNum = pageNum
+      this.getUserList()
+    },
+    selectChange (val) {
+      this.userSelection = val
+    },
+    submitClick () {
       this.$refs['userForm'].validate((valid) => {
         if (!valid) return
-        const user = Object.assign({}, this.user)
-        if (!user.id) {
-          this.createUser(user)
+        const params = Object.assign({}, this.userForm)
+        this.buttonLoading = true
+        if (!params.id) {
+          addUser(params).then((response) => {
+            this.dialogFormVisible = false
+            this.$message.success(response.msg)
+            this.getUserList()
+          }).finally(() => {
+            this.buttonLoading = false
+          })
         } else {
-          this.updateUser(user)
+          updateUser(params).then((response) => {
+            this.dialogFormVisible = false
+            this.$message.success(response.msg)
+            this.getUserList()
+          }).finally(() => {
+            this.buttonLoading = false
+          })
         }
       })
     },
-    createUser (user) {
-      this.saveLoading = true
-      createUser(user).then((response) => {
-        this.dialogFormVisible = false
-        this.getUserList()
-        this.$message({ type: 'success', message: response.msg })
-      }).finally(() => {
-        this.saveLoading = false
-      })
-    },
-    updateUser (user) {
-      this.saveLoading = true
-      updateUser(user).then((response) => {
-        this.dialogFormVisible = false
-        this.getUserList()
-        this.$message({ type: 'success', message: response.msg })
-      }).finally(() => {
-        this.saveLoading = false
-      })
-    },
-    remove (id) {
+    deleteClick (id) {
       this.$confirm('是否确认要删除该用户?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         deleteUser(id).then((response) => {
+          this.$message.success(response.msg)
           this.getUserList()
-          this.$message({ type: 'success', message: response.msg })
         })
       })
     },
-    removeBatch () {
-      if (!this.userSelection.length) {
-        this.$message({ type: 'info', message: '请选择要删除的用户。' })
-        return
-      }
+    deleteBatchClick () {
       this.$confirm('是否确认要删除这些用户?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         deleteBatchUser(this.userSelection.map(user => user.id)).then(response => {
+          this.$message.success(response.msg)
           this.getUserList()
-          this.$message({ type: 'success', message: response.msg })
         })
       })
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+.query-form-input {
+  width: 150px;
+}
+</style>
